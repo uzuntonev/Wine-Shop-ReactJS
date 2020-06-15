@@ -1,10 +1,9 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import Login from '../Login/Login';
-import Register from '../Register/Register';
-import Welcome from '../Welcome/Welcome';
+import ContextWrapper from './ContexWrapper';
+import AppRouter from './AppRouter';
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 import './App.css';
@@ -30,19 +29,15 @@ function App() {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Navbar />
-        <Switch>
-         
-            <Route path="/" exact component={Welcome} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-        
-        </Switch>
-        <Footer />
-      </BrowserRouter>
+      <ContextWrapper>
+        <BrowserRouter>
+          <Navbar />
+          <AppRouter />
+          <Footer />
+        </BrowserRouter>
+      </ContextWrapper>
     </ThemeProvider>
-  )
+  );
 }
 
 export default App;
