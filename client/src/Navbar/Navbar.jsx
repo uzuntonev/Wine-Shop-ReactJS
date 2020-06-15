@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import {
   AppBar,
   Toolbar,
@@ -13,7 +14,7 @@ import {
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { SearchIcon, MoreIcon } from '@material-ui/icons';
 import Cart from './Cart';
-import axios from 'axios';
+import { AuthContext } from '../App/ContexWrapper';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -109,11 +110,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const classes = useStyles();
+  const { auth, setAuth } = useContext(AuthContext);
 
+  console.log(auth);
   const handlerLogout = () => {
     axios
       .get('http://localhost:8000/api/auth/logout', { withCredentials: true })
       .then((data) => {
+        setAuth(false);
         console.log(data);
       });
   };
@@ -133,48 +137,58 @@ const Navbar = () => {
               item
               xs={6}
               spacing={1}
+              className={classes.navLink}
             >
-              <div className={classes.navLink}>
-                <Button>
-                  <Link to="/">
-                    <Icon>home</Icon> Начало
-                  </Link>
-                </Button>
-                <Button>
-                  <Link className={classes.navLink} to="/shop">
-                    <Icon>store_mall_directory</Icon> Магазин
-                  </Link>
-                </Button>
-                <Button>
-                  <Link className={classes.navLink} to="/create-product">
-                    <Icon>add_business</Icon> Добави продукт
-                  </Link>
-                </Button>
-              </div>
+              <Button>
+                <Link to="/">
+                  <Icon>home</Icon> Начало
+                </Link>
+              </Button>
+              {auth ? (
+                <Fragment>
+                  <Button>
+                    <Link className={classes.navLink} to="/shop">
+                      <Icon>store_mall_directory</Icon> Магазин
+                    </Link>
+                  </Button>
+                  <Button>
+                    <Link className={classes.navLink} to="/create-product">
+                      <Icon>add_business</Icon> Добави продукт
+                    </Link>
+                  </Button>
+                </Fragment>
+              ) : null}
             </Grid>
-            <Grid container item xs={5} spacing={1}>
-              <div className={classes.navLink}>
-                <Button>
-                  <Link className={classes.navLink} to="/my-account">
-                    <Icon>account_circle</Icon> My account
-                  </Link>
-                </Button>
-                <Button onClick={handlerLogout}>
-                  <Link className={classes.navLink} to='#'>
-                    <Icon>cancel</Icon> Logout
-                  </Link>
-                </Button>
-                <Button>
-                  <Link className={classes.navLink} to="/login">
-                    <Icon>login</Icon> Login
-                  </Link>
-                </Button>
-                <Button>
-                  <Link className={classes.navLink} to="/register">
-                    <Icon>perm_identity</Icon> Register
-                  </Link>
-                </Button>
-              </div>
+            <Grid container item xs={5} spacing={1} className={classes.navLink}>
+              {auth ? (
+                <Fragment>
+                  <Button>
+                    <Link className={classes.navLink} to="/my-account">
+                      <Icon>account_circle</Icon> My account
+                    </Link>
+                  </Button>
+                  <Button onClick={handlerLogout}>
+                    <Link className={classes.navLink} to="#">
+                      <Icon>cancel</Icon> Logout
+                    </Link>
+                  </Button>
+                  <Cart />
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Button>
+                    <Link className={classes.navLink} to="/login">
+                      <Icon>login</Icon> Login
+                    </Link>
+                  </Button>
+                  <Button>
+                    <Link className={classes.navLink} to="/register">
+                      <Icon>perm_identity</Icon> Register
+                    </Link>
+                  </Button>
+                </Fragment>
+              )}
+
               {/* <div color="inherit" className={classes.search}>
                 <div color="inherit" className={classes.searchIcon}>
                   <SearchIcon />
@@ -188,7 +202,6 @@ const Navbar = () => {
                   inputProps={{ 'aria-label': 'search' }}
                 />
               </div> */}
-              <Cart />
             </Grid>
           </Grid>
         </Toolbar>

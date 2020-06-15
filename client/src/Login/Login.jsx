@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -16,6 +16,7 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import withForm from '../hocs/withForm';
+import { AuthContext } from '../App/ContexWrapper';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    border: `solid 1px ${theme.palette.primary.text}`,
+    padding: '30px',
+    borderRadius: '20px',
+    boxShadow: `3px 3px 5px ${theme.palette.primary.text}`
   },
   avatar: {
     margin: theme.spacing(1),
@@ -50,6 +55,8 @@ const Login = (props) => {
     formIsInvalid,
   } = props;
 
+  const { auth, setAuth } = useContext(AuthContext);
+
   const handleOnChangeEmail = changeHandlerFactory('email');
   const handleOnChangePassword = changeHandlerFactory('password');
 
@@ -61,6 +68,7 @@ const Login = (props) => {
           withCredentials: true,
         })
         .then(({ data }) => {
+          setAuth(true);
           console.log(data);
         });
     });
