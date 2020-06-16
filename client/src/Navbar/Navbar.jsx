@@ -1,20 +1,10 @@
-import React, { useContext, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Icon,
-  Grid,
-  InputBase,
-  MenuItem,
-  Menu,
-} from '@material-ui/core';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { AppBar, Toolbar, Grid } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { SearchIcon, MoreIcon } from '@material-ui/icons';
-import Cart from './Cart';
 import { AuthContext } from '../App/ContexWrapper';
+import AuthorizedNav from './AuthorizedNav';
+import UnauthorizedNav from './UnauthorizedNav';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -111,17 +101,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
   const { auth, setAuth } = useContext(AuthContext);
-
-  console.log(auth);
-  const handlerLogout = () => {
-    axios
-      .get('http://localhost:8000/api/auth/logout', { withCredentials: true })
-      .then((data) => {
-        setAuth(false);
-        console.log(data);
-      });
-  };
-
+  const history = useHistory();
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -130,7 +110,22 @@ const Navbar = () => {
             <Grid container alignItems="center" item xs={1}>
               <img src="/ruevite.png" className={classes.logo} />
             </Grid>
-            <Grid
+            {auth ? (
+              <AuthorizedNav classes={classes} history={history} />
+            ) : (
+              <UnauthorizedNav classes={classes} />
+            )}
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
+
+export default Navbar;
+
+{
+  /* <Grid
               container
               justify="center"
               alignItems="center"
@@ -189,7 +184,7 @@ const Navbar = () => {
                 </Fragment>
               )}
 
-              {/* <div color="inherit" className={classes.search}>
+               <div color="inherit" className={classes.search}>
                 <div color="inherit" className={classes.searchIcon}>
                   <SearchIcon />
                 </div>
@@ -201,13 +196,6 @@ const Navbar = () => {
                   }}
                   inputProps={{ 'aria-label': 'search' }}
                 />
-              </div> */}
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-};
-
-export default Navbar;
+              </div> 
+            </Grid> */
+}
