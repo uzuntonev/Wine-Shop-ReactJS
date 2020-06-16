@@ -15,7 +15,7 @@ module.exports = {
           return;
         }
         const token = createToke({ id: user._id });
-        res.cookie(authCookieName, token, { httpOnly: true }).send({
+        res.cookie(authCookieName, token, { httpOnly: false }).send({
           msg: 'Successful login',
           user: { _id: user._id, email: user.email, token },
         });
@@ -31,7 +31,7 @@ module.exports = {
     UserModel.create({ email, password, name, userType })
       .then((user) => {
         const token = createToke({ id: user._id });
-        res.cookie(authCookieName, token, { httpOnly: true }).send({
+        res.cookie(authCookieName, token, { httpOnly: false }).send({
           msg: 'Successful registration',
           user: { _id: user._id, email: user.email, token },
         });
