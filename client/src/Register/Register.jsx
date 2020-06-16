@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
-import axios from 'axios';
 import {
   Select,
   TextField,
@@ -19,6 +18,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 
 import withForm from '../hocs/withForm';
+import { AuthContext } from '../App/ContexWrapper';
+import userService from '../services/user-service';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,16 +45,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = (props) => {
+const Register = ({
+  changeHandlerFactory,
+  formState,
+  runValidations,
+  runControlValidation,
+  formIsInvalid,
+  history,
+}) => {
   const classes = useStyles();
-
-  const {
-    changeHandlerFactory,
-    formState,
-    runValidations,
-    runInputValidation,
-    formIsInvalid
-  } = props;
+  const { auth, setAuth } = useContext(AuthContext);
 
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangePassword = changeHandlerFactory('password');
@@ -64,13 +65,11 @@ const Register = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     runValidations().then((formData) => {
-      axios
-        .post('http://localhost:8000/api/auth/register', formData, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          console.log(data);
-        });
+      userService.register(formData).then(({ data }) => {
+        console.log(data);
+        setAuth(true);
+        history.push('/');
+      });
     });
   };
 
@@ -86,7 +85,7 @@ const Register = (props) => {
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={7}>
               <TextField
                 autoComplete="name"
                 name="name"
@@ -96,12 +95,12 @@ const Register = (props) => {
                 id="name"
                 label="Потребителско име"
                 onChange={handleOnChangeName}
-                onBlur={runInputValidation('name')}
+                onBlur={runControlValidation('name')}
                 error={!!formState.errors && !!formState.errors['name']}
                 helperText={formState.errors && formState.errors['name']}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={5}>
               <FormControl fullWidth variant="outlined">
                 <InputLabel id="userType">Тип потребител</InputLabel>
                 <Select
@@ -128,7 +127,7 @@ const Register = (props) => {
                 name="email"
                 autoComplete="email"
                 onChange={handleOnChangeEmail}
-                onBlur={runInputValidation('email')}
+                onBlur={runControlValidation('email')}
                 error={!!formState.errors && !!formState.errors['email']}
                 helperText={formState.errors && formState.errors['email']}
               />
@@ -144,7 +143,7 @@ const Register = (props) => {
                 id="password"
                 autoComplete="current-password"
                 onChange={handleOnChangePassword}
-                onBlur={runInputValidation('password')}
+                onBlur={runControlValidation('password')}
                 error={!!formState.errors && !!formState.errors['password']}
                 helperText={formState.errors && formState.errors['password']}
               />
@@ -160,7 +159,7 @@ const Register = (props) => {
                 id="rePassword"
                 autoComplete="current-rePassword"
                 onChange={handleOnChangeRePassword}
-                onBlur={runInputValidation('rePassword')}
+                onBlur={runControlValidation('rePassword')}
                 error={!!formState.errors && !!formState.errors['rePassword']}
                 helperText={formState.errors && formState.errors['rePassword']}
               />

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
-import axios from 'axios';
 import {
   Avatar,
   Button,
@@ -17,7 +16,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import withForm from '../hocs/withForm';
 import { AuthContext } from '../App/ContexWrapper';
-
+import userService from '../services/user-service';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     border: `solid 1px ${theme.palette.primary.text}`,
     padding: '30px',
     borderRadius: '20px',
-    boxShadow: `3px 3px 5px ${theme.palette.primary.text}`
+    boxShadow: `3px 3px 5px ${theme.palette.primary.text}`,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -45,15 +44,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = (props) => {
+const Login = ({
+  changeHandlerFactory,
+  formState,
+  runValidations,
+  runControlValidation,
+  formIsInvalid,
+  history,
+}) => {
   const classes = useStyles();
-  const {
-    changeHandlerFactory,
-    formState,
-    runValidations,
-    runInputValidation,
-    formIsInvalid,
-  } = props;
 
   const { auth, setAuth } = useContext(AuthContext);
 
@@ -63,14 +62,10 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     runValidations().then((formData) => {
-      axios
-        .post('http://localhost:8000/api/auth', formData, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          setAuth(true);
-          console.log(data);
-        });
+      userService.login(formData).then(() => {
+        setAuth(true);
+        history.push('/');
+      });
     });
   };
 
@@ -95,7 +90,7 @@ const Login = (props) => {
             name="email"
             autoComplete="email"
             onChange={handleOnChangeEmail}
-            onBlur={runInputValidation('email')}
+            onBlur={runControlValidation('email')}
             error={!!formState.errors && !!formState.errors['email']}
             helperText={formState.errors && formState.errors['email']}
           />
@@ -110,7 +105,7 @@ const Login = (props) => {
             id="password"
             autoComplete="current-password"
             onChange={handleOnChangePassword}
-            onBlur={runInputValidation('password')}
+            onBlur={runControlValidation('password')}
             error={!!formState.errors && !!formState.errors['password']}
             helperText={formState.errors && formState.errors['password']}
           />
