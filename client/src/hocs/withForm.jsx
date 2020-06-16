@@ -43,29 +43,30 @@ const withForm = (Cmp, initialState, schema) => {
       return !schema.isValidSync(state.form);
     };
 
-    const runInputValidation = (inputName) => {
+    const runControlValidation = (controlName) => {
       return () => {
-        return schema
-          .validate(state.form, { abortEarly: false })
+        return schema.fields[controlName]
+          .validate(state.form[controlName], { abortEarly: false })
+          .then(() =>
+            setState({ ...state, errors: { [controlName]: undefined } })
+          )
           .catch((err) => {
-            const inputError = err.inner.find((e) => e.path === inputName);
-            if (inputError)
-              setState({
-                ...state,
-                errors: { [inputError.path]: [inputError.message] },
-              });
+            // const inputError = err.inner.find((e) => e.path === inputName);
+            // if (inputError)
+            setState({
+              ...state,
+              errors: { [controlName]: err.errors },
+            });
           });
       };
     };
-
-
 
     return (
       <Cmp
         {...props}
         changeHandlerFactory={changeHandlerFactory}
         runValidations={runValidations}
-        runInputValidation={runInputValidation}
+        runControlValidation={runControlValidation}
         formIsInvalid={formIsInvalid}
         formState={state}
       />
