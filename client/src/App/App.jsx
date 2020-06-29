@@ -32,7 +32,9 @@ function App() {
       <ContextWrapper>
         <BrowserRouter>
           <Navbar />
-          <AppRouter />
+          <React.Suspense fallback={<h2>Loading...</h2>}>
+            <AppRouter />
+          </React.Suspense>
           <Footer />
         </BrowserRouter>
       </ContextWrapper>
