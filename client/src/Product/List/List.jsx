@@ -5,8 +5,6 @@ import {
 } from '../../services/cloudinary-service';
 import {
   Image,
-  Video,
-  Transformation,
   CloudinaryContext,
 } from 'cloudinary-react';
 
