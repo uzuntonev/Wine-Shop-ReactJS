@@ -30,6 +30,7 @@ function App() {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
+
       <StoreContext>
         <ContextWrapper>
           <BrowserRouter>
@@ -39,6 +40,15 @@ function App() {
           </BrowserRouter>
         </ContextWrapper>
       </StoreContext>
+      <ContextWrapper>
+        <BrowserRouter>
+          <Navbar />
+          <React.Suspense fallback={<h2>Loading...</h2>}>
+            <AppRouter />
+          </React.Suspense>
+          <Footer />
+        </BrowserRouter>
+      </ContextWrapper>
     </ThemeProvider>
   );
 }

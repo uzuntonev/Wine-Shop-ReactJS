@@ -31,7 +31,7 @@ const AuthorizedNav = ({ classes, history }) => {
           </Link>
         </Button>
         <Button>
-          <Link className={classes.navLink} to="/create-product">
+          <Link className={classes.navLink} to="/add-product">
             <Icon>add_business</Icon> Добави продукт
           </Link>
         </Button>
