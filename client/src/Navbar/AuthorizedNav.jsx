@@ -2,7 +2,7 @@ import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Grid } from '@material-ui/core';
 import { SearchIcon, MoreIcon } from '@material-ui/icons';
-import { AuthContext } from '../App/ContexWrapper';
+import { AuthContext } from '../App/ContextWrapper';
 import userService from '../services/user-service';
 
 const AuthorizedNav = ({ classes, history }) => {
@@ -48,6 +48,11 @@ const AuthorizedNav = ({ classes, history }) => {
         <Button>
           <Link className={classes.navLink} to="/my-account">
             <Icon>account_circle</Icon> Моите продукти
+          </Link>
+        </Button>
+        <Button>
+          <Link className={classes.navLink} to="/test">
+            <Icon>account_circle</Icon> TEST
           </Link>
         </Button>
         <Button onClick={handlerLogout}>

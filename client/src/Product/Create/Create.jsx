@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import {
@@ -15,8 +15,11 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import withForm from '../../hocs/withForm';
-import { AuthContext } from '../../App/ContexWrapper';
+import { AuthContext } from '../../App/ContextWrapper';
 import productService from '../../services/product-service';
+import { openUploadWidget } from '../../services/cloudinary-service';
+import { StoreContext } from '../../App/ContextStore';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -55,6 +58,7 @@ const Create = ({
   const classes = useStyles();
 
   const { auth, setAuth } = useContext(AuthContext);
+  const { images, setImages } = useContext(StoreContext);
 
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangeYear = changeHandlerFactory('year');
@@ -66,7 +70,25 @@ const Create = ({
     e.preventDefault();
     runValidations().then((formData) => {
       //TODO Use product-service to post data
-      console.log(formData)
+      console.log({images, ...formData});
+    });
+  };
+
+  const beginUpload = (tag) => {
+    const uploadOptions = {
+      cloudName: 'dfyamkucg',
+      tags: [tag, 'anImage'],
+      uploadPreset: 'upload',
+    };
+    openUploadWidget(uploadOptions, (error, photos) => {
+      if (!error) {
+        console.log(photos);
+        if (photos.event === 'success') {
+          setImages([...images, photos.info.public_id]);
+        }
+      } else {
+        console.log(error);
+      }
     });
   };
 
@@ -151,6 +173,8 @@ const Create = ({
             error={!!formState.errors && !!formState.errors['alcohol']}
             helperText={formState.errors && formState.errors['alcohol']}
           />
+          <button onClick={() => beginUpload('image')}>Upload Image</button>
+
           <Button
             type="submit"
             fullWidth
@@ -172,9 +196,9 @@ const schema = yup.object().shape({
   year: yup.string().required('Year is required'),
   type: yup.string().required('Type name is required'),
   alcohol: yup.string().required('Alcohol name is required'),
-  size: yup.string().required('Size is required'), 
-//   imageUrl: yup.string().required('Image url is required'),
-//   creatorId: yup.string().required('Product name is required'),
+  size: yup.string().required('Size is required'),
+  //   imageUrl: yup.string().required('Image url is required'),
+  //   creatorId: yup.string().required('Product name is required'),
 });
 
 const initialState = {
@@ -183,8 +207,8 @@ const initialState = {
   type: '',
   alcohol: '',
   size: '',
-//   imageUrl: '',
-//   creatorId: ''
+  //   imageUrl: '',
+  //   creatorId: ''
 };
 
 export default withForm(Create, initialState, schema);

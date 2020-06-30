@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppBar, Toolbar, Grid } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { AuthContext } from '../App/ContexWrapper';
+import { AuthContext } from '../App/ContextWrapper';
 import AuthorizedNav from './AuthorizedNav';
 import UnauthorizedNav from './UnauthorizedNav';
 

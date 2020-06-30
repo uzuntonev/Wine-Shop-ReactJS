@@ -2,9 +2,10 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import ContextWrapper from './ContexWrapper';
+import ContextWrapper from './ContextWrapper';
 import AppRouter from './AppRouter';
 import { fade, makeStyles } from '@material-ui/core/styles';
+import StoreContext from './ContextStore';
 
 import './App.css';
 
@@ -29,13 +30,15 @@ function App() {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <ContextWrapper>
-        <BrowserRouter>
-          <Navbar />
-          <AppRouter />
-          <Footer />
-        </BrowserRouter>
-      </ContextWrapper>
+      <StoreContext>
+        <ContextWrapper>
+          <BrowserRouter>
+            <Navbar />
+            <AppRouter />
+            <Footer />
+          </BrowserRouter>
+        </ContextWrapper>
+      </StoreContext>
     </ThemeProvider>
   );
 }
