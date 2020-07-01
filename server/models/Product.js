@@ -27,10 +27,10 @@ const ProductSchema = new mongoose.Schema({
   imageUrl: {
     type: String,
     required: true,
-    validate: {
-      validator: (v) => v.startsWith('http'),
-      message: 'imageUrl must be valid link',
-    },
+    // validate: {
+    //   validator: (v) => v.startsWith('http'),
+    //   message: 'imageUrl must be valid link',
+    // },
   },
     creatorId: { type: ObjectId, ref: 'User' },
 });

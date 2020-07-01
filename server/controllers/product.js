@@ -12,19 +12,20 @@ module.exports = {
 
   postProduct: (req, res, next) => {
     const newProduct = req.body;
-    const { id: userId } = req.user;
+    const { _id: userId } = req.user;
+  
     ProductModel.create({ ...newProduct, creatorId: userId })
       .then((product) => {
         Promise.all([
           UserModel.updateOne(
-            { _id: id },
+            { _id: userId },
             { $push: { products: product._id } }
           ),
           product,
         ]);
       })
-      .then(([user, product]) => {
-        res.send({ msg: 'Successful create product', product });
+      .then(() => {
+        res.status(201).send({ msg: 'Successful create product' });
       })
       .catch(next);
   },
