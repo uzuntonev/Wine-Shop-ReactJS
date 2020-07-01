@@ -5,7 +5,7 @@ import { StoreContext } from '../../Store/Store';
 
 const List = () => {
   // const { images, setImages } = useContext(StoreContext);
-  const [ state, dispatch ] = useContext(StoreContext);
+  const { state, dispatch } = useContext(StoreContext);
 
 
   // useEffect(() => {

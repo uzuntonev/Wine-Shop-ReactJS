@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import {
@@ -15,8 +15,8 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import withForm from '../hocs/withForm';
-import { AuthContext } from '../App/ContextWrapper';
-import userService from '../services/user-service';
+import { StoreContext } from '../Store/Store';
+import { login } from '../Store/actions';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -53,21 +53,18 @@ const Login = ({
   history,
 }) => {
   const classes = useStyles();
-
-  const { auth, setAuth } = useContext(AuthContext);
+  const { state, dispatch } = useContext(StoreContext);
 
   const handleOnChangeEmail = changeHandlerFactory('email');
   const handleOnChangePassword = changeHandlerFactory('password');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     runValidations().then((formData) => {
-      userService.login(formData).then(() => {
-        setAuth(true);
-        history.push('/');
-      });
+      dispatch(login(formData));
+      history.push('/');
     });
-  };
+  });
 
   return (
     <Container component="main" maxWidth="xs">

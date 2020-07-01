@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import {
@@ -16,10 +16,10 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-
 import withForm from '../hocs/withForm';
-import { AuthContext } from '../App/ContextWrapper';
-import userService from '../services/user-service';
+import { StoreContext } from '../Store/Store';
+import { register } from '../Store/actions';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,7 +54,8 @@ const Register = ({
   history,
 }) => {
   const classes = useStyles();
-  const { auth, setAuth } = useContext(AuthContext);
+  const { state, dispatch } = useContext(StoreContext);
+
 
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangePassword = changeHandlerFactory('password');
@@ -62,16 +63,23 @@ const Register = ({
   const handleOnChangeRePassword = changeHandlerFactory('rePassword');
   const handleOnChangeUserType = changeHandlerFactory('userType');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     runValidations().then((formData) => {
-      userService.register(formData).then(({ data }) => {
-        console.log(data);
-        setAuth(true);
-        history.push('/');
-      });
+      dispatch(register(formData));
+      history.push('/');
     });
-  };
+  });
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   runValidations().then((formData) => {
+  //     userService.register(formData).then(({ data }) => {
+  //       console.log(data);
+  //       setAuth(true);
+  //       history.push('/');
+  //     });
+  //   });
+  // };
 
   return (
     <Container component="main" maxWidth="xs">

@@ -10,6 +10,14 @@ export const ActionTypes = {
   Logout: Symbol('[AUTH] Logout'),
   LogoutSuccess: Symbol('[AUTH] Logout Success'),
   LogoutFailure: Symbol('[AUTH] Logout Failure'),
+
+  CreateProduct: Symbol('[AUTH] Create Product'),
+  CreateProductSuccess: Symbol('[AUTH] Create Product Success'),
+  CreateProductFailure: Symbol('[AUTH] Create Product Failure'),
+
+  getProducts: Symbol('[AUTH] Get All Products'),
+  getProductsSuccess: Symbol('[AUTH] Get All Products Success'),
+  getProductsFailure: Symbol('[AUTH] Get All Products Failure'),
 };
 
 export const login = (user) => ({ type: ActionTypes.Login, payload: { user } });
@@ -22,4 +30,12 @@ export const registerFailure = (error) => ({type: ActionTypes.RegisterFailure, p
 
 export const logout = () => ({type: ActionTypes.Logout, payload: undefined});
 export const logoutSuccess = () => ({type: ActionTypes.LogoutSuccess, payload: undefined});
-export const logoutFailure  = (error) => ({type: ActionTypes.LoginFailure, payload: { error }});
+export const logoutFailure  = (error) => ({type: ActionTypes.LogoutFailure, payload: { error }});
+
+export const createProduct = (product) => ({ type: ActionTypes.CreateProduct, payload: { product } });
+export const createProductSuccess = () => ({ type: ActionTypes.CreateProductSuccess, payload: undefined});
+export const createProductFailure = (error) => ({ type: ActionTypes.CreateProductFailure, payload: { error }});
+
+export const getProducts = (products) => ({ type: ActionTypes.CreateProduct, payload: { products } });
+export const getProductsSuccess = (products) => ({ type: ActionTypes.CreateProductSuccess, payload: { products }});
+export const getProductsFailure = (error) => ({ type: ActionTypes.CreateProductFailure, payload: { error }});

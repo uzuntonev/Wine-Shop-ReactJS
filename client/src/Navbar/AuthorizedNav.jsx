@@ -4,15 +4,19 @@ import { Button, Icon, Grid } from '@material-ui/core';
 import { SearchIcon, MoreIcon } from '@material-ui/icons';
 import { AuthContext } from '../App/ContextWrapper';
 import userService from '../services/user-service';
+import { logout } from '../Store/actions';
+import { StoreContext } from '../Store/Store';
 
 const AuthorizedNav = ({ classes, history }) => {
   const { auth, setAuth } = useContext(AuthContext);
+  const { state, dispatch } = useContext(StoreContext);
 
   const handlerLogout = () => {
-    userService.logout().then(() => {
-      setAuth(false);
-      history.push('/')
-    })
+    // userService.logout().then(() => {
+    //   setAuth(false);
+    //   history.push('/')
+    // })
+    dispatch(logout())
   };
   return (
     <Fragment>

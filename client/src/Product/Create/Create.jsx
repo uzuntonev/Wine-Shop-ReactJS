@@ -19,7 +19,7 @@ import { AuthContext } from '../../App/ContextWrapper';
 import productService from '../../services/product-service';
 import { openUploadWidget } from '../../services/cloudinary-service';
 import { StoreContext } from '../../Store/Store';
-
+import { createProduct } from '../../Store/actions';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -57,9 +57,10 @@ const Create = ({
 }) => {
   const classes = useStyles();
 
-  const { auth, setAuth } = useContext(AuthContext);
+  // const { auth, setAuth } = useContext(AuthContext);
   // const { images, setImages } = useContext(StoreContext);
-  const [ state, dispatch ] = useContext(StoreContext);
+  const [ image, setImage ] = useState()
+  const { state, dispatch } = useContext(StoreContext);
 
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangeYear = changeHandlerFactory('year');
@@ -70,8 +71,16 @@ const Create = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     runValidations().then((formData) => {
-      //TODO Use product-service to post data
-      console.log({images: state.images, ...formData});
+      const product = {
+        ...formData,
+        imageUrl: image,
+        creatorId: state.user._id
+      }
+
+      dispatch(createProduct(product))
+      history.push('/')
+      console.log(product);
+
     });
   };
 
@@ -83,13 +92,13 @@ const Create = ({
     };
     openUploadWidget(uploadOptions, (error, photos) => {
       if (!error) {
-        console.log(photos);
+        // console.log(photos);
         if (photos.event === 'success') {
           // setImages([...images, photos.info.public_id]);
-          dispatch({ type: 'SET_IMAGES', payload: [...state.images, photos.info.public_id]});
+          setImage(photos.info.public_id);
         }
       } else {
-        console.log(error);
+        // console.log(error);
       }
     });
   };
@@ -175,7 +184,7 @@ const Create = ({
             error={!!formState.errors && !!formState.errors['alcohol']}
             helperText={formState.errors && formState.errors['alcohol']}
           />
-          <button onClick={() => beginUpload('image')}>Upload Image</button>
+          <button type='button' onClick={() => beginUpload('image')}>Upload Image</button>
 
           <Button
             type="submit"

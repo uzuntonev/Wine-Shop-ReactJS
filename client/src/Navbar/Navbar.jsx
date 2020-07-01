@@ -5,6 +5,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../App/ContextWrapper';
 import AuthorizedNav from './AuthorizedNav';
 import UnauthorizedNav from './UnauthorizedNav';
+import { StoreContext } from '../Store/Store';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -100,8 +101,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const classes = useStyles();
-  const { auth, setAuth } = useContext(AuthContext);
+  const { state , dispatch } = useContext(StoreContext);
   const history = useHistory();
+
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -110,7 +112,7 @@ const Navbar = () => {
             <Grid container alignItems="center" item xs={1}>
               <img src="/ruevite.png" className={classes.logo} />
             </Grid>
-            {auth ? (
+            {state.isAuth ? (
               <AuthorizedNav classes={classes} history={history} />
             ) : (
               <UnauthorizedNav classes={classes} />
