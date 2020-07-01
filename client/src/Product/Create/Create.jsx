@@ -18,7 +18,7 @@ import withForm from '../../hocs/withForm';
 import { AuthContext } from '../../App/ContextWrapper';
 import productService from '../../services/product-service';
 import { openUploadWidget } from '../../services/cloudinary-service';
-import { StoreContext } from '../../App/ContextStore';
+import { StoreContext } from '../../Store/Store';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -58,7 +58,8 @@ const Create = ({
   const classes = useStyles();
 
   const { auth, setAuth } = useContext(AuthContext);
-  const { images, setImages } = useContext(StoreContext);
+  // const { images, setImages } = useContext(StoreContext);
+  const [ state, dispatch ] = useContext(StoreContext);
 
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangeYear = changeHandlerFactory('year');
@@ -70,7 +71,7 @@ const Create = ({
     e.preventDefault();
     runValidations().then((formData) => {
       //TODO Use product-service to post data
-      console.log({images, ...formData});
+      console.log({images: state.images, ...formData});
     });
   };
 
@@ -84,7 +85,8 @@ const Create = ({
       if (!error) {
         console.log(photos);
         if (photos.event === 'success') {
-          setImages([...images, photos.info.public_id]);
+          // setImages([...images, photos.info.public_id]);
+          dispatch({ type: 'SET_IMAGES', payload: [...state.images, photos.info.public_id]});
         }
       } else {
         console.log(error);
