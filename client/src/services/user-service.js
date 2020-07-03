@@ -1,5 +1,6 @@
 import axios from 'axios';
 const baseUrl = 'http://localhost:8000/api/auth';
+
 const userService = {
   login: function (data) {
     return axios
