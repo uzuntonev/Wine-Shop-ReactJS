@@ -59,7 +59,7 @@ const Create = ({
 
   // const { auth, setAuth } = useContext(AuthContext);
   // const { images, setImages } = useContext(StoreContext);
-  const [ image, setImage ] = useState()
+  const [image, setImage] = useState();
   const { state, dispatch } = useContext(StoreContext);
 
   const handleOnChangeName = changeHandlerFactory('name');
@@ -67,6 +67,7 @@ const Create = ({
   const handleOnChangeType = changeHandlerFactory('type');
   const handleOnChangeAlcohol = changeHandlerFactory('alcohol');
   const handleOnChangeSize = changeHandlerFactory('size');
+  const handleOnChangePrice = changeHandlerFactory('price');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -74,13 +75,11 @@ const Create = ({
       const product = {
         ...formData,
         imageUrl: image,
-        creatorId: state.user._id
-      }
+        creatorId: window.localStorage.getItem('user').id,
+      };
 
-      dispatch(createProduct(product))
-      history.push('/')
-      console.log(product);
-
+      dispatch(createProduct(product));
+      history.push('/');
     });
   };
 
@@ -184,7 +183,23 @@ const Create = ({
             error={!!formState.errors && !!formState.errors['alcohol']}
             helperText={formState.errors && formState.errors['alcohol']}
           />
-          <button type='button' onClick={() => beginUpload('image')}>Upload Image</button>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="price"
+            label="Цена"
+            id="price"
+            autoComplete="current-price"
+            onChange={handleOnChangePrice}
+            onBlur={runControlValidation('price')}
+            error={!!formState.errors && !!formState.errors['price']}
+            helperText={formState.errors && formState.errors['price']}
+          />
+          <button type="button" onClick={() => beginUpload('image')}>
+            Upload Image
+          </button>
 
           <Button
             type="submit"
@@ -203,10 +218,11 @@ const Create = ({
 };
 
 const schema = yup.object().shape({
-  name: yup.string().required('Product name is required'),
+  name: yup.string().min(5, 'Name must be at least 5 characters').required('Product name is required'),
   year: yup.string().required('Year is required'),
   type: yup.string().required('Type name is required'),
   alcohol: yup.string().required('Alcohol name is required'),
+  price: yup.string().required('Price is required'),
   size: yup.string().required('Size is required'),
   //   imageUrl: yup.string().required('Image url is required'),
   //   creatorId: yup.string().required('Product name is required'),
@@ -218,6 +234,7 @@ const initialState = {
   type: '',
   alcohol: '',
   size: '',
+  price: ''
   //   imageUrl: '',
   //   creatorId: ''
 };

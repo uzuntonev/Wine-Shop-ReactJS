@@ -14,7 +14,8 @@ const AppRouter = () => {
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/add-product" component={Create} />
-      <Route path="/test" component={List} />
+      <Route path="/my-products" component={List} />
+      <Route path="/shop" component={List} />
     </Switch>
   );
 };

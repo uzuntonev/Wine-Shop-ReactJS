@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
-
-import { Toolbar, Typography, Link } from '@material-ui/core';
+import {Toolbar, Typography, Link} from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 

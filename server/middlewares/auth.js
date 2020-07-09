@@ -21,15 +21,22 @@ function auth(redirectUnauthenticated = true) {
           return;
         }
         if (err.name === 'TokenExpiredError' && err.message === 'jwt expired') {
-          res.status(401).send({msg: 'You are not authorized'});
+
+          res
+            .status(401)
+            .send({ msg: 'Token is expired, you are unauthorized' });
           return;
         }
         if (err.message === 'blacklisted token') {
-          res.status(401).send({msg: 'You are not authorized'});
+          res
+            .status(401)
+            .send({ msg: 'Token is blacklisted, you are unauthorized' });
           return;
         }
         if (err.message === 'jwt must be provided') {
-          res.status(401).send({msg: 'You are not authorized'});
+          res
+            .status(401)
+            .send({ msg: 'Token is not provide, you are unauthorized' });
           return;
         }
         next(err);

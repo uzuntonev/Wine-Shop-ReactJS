@@ -16,6 +16,11 @@ const productService = {
       })
       .catch(console.error);
   },
+  getUserProducts: function () {
+    return axios.get(`${baseUrl}/my-products`, {
+      withCredentials: true,
+    }).catch(console.error);
+  },
 };
 
 export default productService;
