@@ -21,6 +21,7 @@ function auth(redirectUnauthenticated = true) {
           return;
         }
         if (err.name === 'TokenExpiredError' && err.message === 'jwt expired') {
+
           res
             .status(401)
             .send({ msg: 'Token is expired, you are unauthorized' });
