@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middlewares/auth');
+
 const {
   postProduct,
   getProducts,
@@ -13,7 +15,7 @@ router.get('/', getProducts);
 
 // @route POST api/products
 // @desc create product
-router.post('/', postProduct);
+router.post('/', auth(), postProduct);
 
 // @route GET api/products
 // @desc get product by id
@@ -21,10 +23,10 @@ router.get('/:id', getProducts);
 
 // @route PUT api/products
 // @desc update product
-router.put('/:id', putProduct);
+router.put('/:id', auth(), putProduct);
 
 // @route DELETE api/products
 // @desc delete product
-router.delete('/:id', delProduct);
+router.delete('/:id', auth(), delProduct);
 
 module.exports = router;

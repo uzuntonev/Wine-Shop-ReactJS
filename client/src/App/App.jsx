@@ -2,12 +2,9 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import ContextWrapper from './ContextWrapper';
 import AppRouter from './AppRouter';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import StoreContext from '../Store/Store';
-
-import './App.css';
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -30,17 +27,15 @@ function App() {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <StoreContext>
-        <ContextWrapper>
-          <BrowserRouter>
-            <Navbar />
-            <React.Suspense fallback={<h2>Loading...</h2>}>
-              <AppRouter />
-            </React.Suspense>
-            <Footer />
-          </BrowserRouter>
-        </ContextWrapper>
-      </StoreContext>
+      <BrowserRouter>
+        <StoreContext>
+          <Navbar />
+          <React.Suspense fallback={<h2>Loading...</h2>}>
+            <AppRouter />
+          </React.Suspense>
+          <Footer />
+        </StoreContext>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
