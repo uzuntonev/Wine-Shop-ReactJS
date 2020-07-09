@@ -3,17 +3,32 @@ const { ProductModel, UserModel } = require('../models');
 module.exports = {
   getProducts: (req, res, next) => {
     const { id } = req.params;
-    ProductModel.find(id ? { _id: id } : {})
+    ProductModel.find({})
       .then((products) => {
         res.json(products);
       })
       .catch(next);
   },
-
+  getSingleProduct: (req, res, next) => {
+    const { id } = req.params;
+    ProductModel.find({ _id: id })
+      .then((products) => {
+        res.status(200).json(products);
+      })
+      .catch(next);
+  },
+  getUserProduct: (req, res, next) => {
+    const { _id: userId } = req.user;
+    ProductModel.find({ creatorId: userId })
+      .then((products) => {
+        res.status(200).json(products);
+      })
+      .catch(next);
+  },
   postProduct: (req, res, next) => {
     const newProduct = req.body;
     const { _id: userId } = req.user;
-  
+
     ProductModel.create({ ...newProduct, creatorId: userId })
       .then((product) => {
         Promise.all([

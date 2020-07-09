@@ -8,6 +8,10 @@ const ProductSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 100,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
   year: {
     type: Number,
     required: true,
