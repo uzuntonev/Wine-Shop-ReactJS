@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 
-import Toolbar from '@material-ui/core/Toolbar';
+import {Toolbar, Typography, Link} from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Copyright from '../Copyright/Copyright';
+
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) =>
     copyright: {
       margin: 'auto',
     },
+    link: {
+      textDecoration: 'none',
+      color: 'inherit',
+    },
   })
 );
 
@@ -33,7 +37,13 @@ const Footer = () => {
       <AppBar position="fixed" className={classes.appBar}>
         <div className={classes.copyright}>
           <Toolbar>
-            <Copyright />
+            <Typography variant="body2" align="center">
+              {'Copyright © '}
+              <Link className={classes.link} href="#">
+                Your Website
+              </Link>{' '}
+              {new Date().getFullYear()}
+            </Typography>
           </Toolbar>
         </div>
       </AppBar>

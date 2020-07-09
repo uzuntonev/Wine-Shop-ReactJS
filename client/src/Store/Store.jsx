@@ -23,7 +23,7 @@ const authCookie = cookies['x-auth-cookie'];
 
 const initialState = {
   isAuth: !!authCookie,
-  user: null,
+  user: window.localStorage.getItem('user'),
   products: [],
   images: [],
   error: null,
@@ -31,10 +31,18 @@ const initialState = {
 
 const actionMap = {
   [ActionTypes.Login]: (state) => ({ ...state, error: null }),
-  [ActionTypes.LoginSuccess]: (state, { user }) => ({ ...state, user, isAuth: true }),
+  [ActionTypes.LoginSuccess]: (state, { user }) => ({
+    ...state,
+    user,
+    isAuth: true,
+  }),
   [ActionTypes.LoginFailure]: (state, { error }) => ({ ...state, error }),
   [ActionTypes.Register]: (state) => ({ ...state, error: null }),
-  [ActionTypes.RegisterSuccess]: (state, { user }) => ({ ...state, user, isAuth: true }),
+  [ActionTypes.RegisterSuccess]: (state, { user }) => ({
+    ...state,
+    user,
+    isAuth: true,
+  }),
   [ActionTypes.RegisterFailure]: (state, { error }) => ({ ...state, error }),
   [ActionTypes.Logout]: (state) => ({ ...state, user: null, isAuth: false }),
 };
@@ -43,13 +51,22 @@ const asyncActionMap = {
   [ActionTypes.Login]: ({ user }) => {
     return userService
       .login(user)
-      .then(({data: { user }}) => loginSuccess(user))
+      .then(({ data: { user } }) => {
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({ id: user._id, token: user.token })
+        );
+        return loginSuccess(user);
+      })
       .catch((error) => loginFailure(error));
   },
   [ActionTypes.Logout]: () => {
     return userService
       .logout()
-      .then(() => logoutSuccess())
+      .then(() => {
+        window.localStorage.clear();
+        return logoutSuccess();
+      })
       .catch((error) => logoutFailure(error));
   },
   [ActionTypes.CreateProduct]: ({ product }) => {
@@ -59,10 +76,15 @@ const asyncActionMap = {
       .catch((error) => createProductFailure(error));
   },
   [ActionTypes.Register]: ({ user }) => {
-    debugger
     return userService
       .register(user)
-      .then(() => registerSuccess(user))
+      .then(() => {
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({ id: user._id, token: user.token })
+        );
+        return registerSuccess(user);
+      })
       .catch((error) => registerFailure(error));
   },
 };
@@ -72,8 +94,6 @@ const storeReducer = (state, action) => {
     ? actionMap[action.type](state, action.payload)
     : state;
 };
-
-
 
 export const StoreContext = createContext(initialState);
 

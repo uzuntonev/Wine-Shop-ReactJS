@@ -3,8 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Welcome from '../Welcome/Welcome';
-
-import CreateProduct from '../Product/CreateProduct';
 import Create from '../Product/Create/Create';
 import List from '../Product/List/List';
 
@@ -15,9 +13,9 @@ const AppRouter = () => {
       <Route path="/" exact component={Welcome} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      {/* <Route path="/add-product" component={CreateProduct} /> */}
       <Route path="/add-product" component={Create} />
-      <Route path="/test" component={List} />
+      <Route path="/my-products" component={List} />
+      <Route path="/shop" component={List} />
     </Switch>
   );
 };

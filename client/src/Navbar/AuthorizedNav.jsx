@@ -17,6 +17,7 @@ const AuthorizedNav = ({ classes, history }) => {
     //   history.push('/')
     // })
     dispatch(logout())
+    history.push('/')
   };
   return (
     <Fragment>
@@ -50,7 +51,7 @@ const AuthorizedNav = ({ classes, history }) => {
         alignItems="flex-end"
       >
         <Button>
-          <Link className={classes.navLink} to="/my-account">
+          <Link className={classes.navLink} to="/my-products">
             <Icon>account_circle</Icon> Моите продукти
           </Link>
         </Button>
