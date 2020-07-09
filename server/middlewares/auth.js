@@ -21,15 +21,15 @@ function auth(redirectUnauthenticated = true) {
           return;
         }
         if (err.name === 'TokenExpiredError' && err.message === 'jwt expired') {
-          res.redirect('/login');
+          res.status(401).send({msg: 'You are not authorized'});
           return;
         }
         if (err.message === 'blacklisted token') {
-          res.redirect('/login');
+          res.status(401).send({msg: 'You are not authorized'});
           return;
         }
         if (err.message === 'jwt must be provided') {
-          res.redirect('/login');
+          res.status(401).send({msg: 'You are not authorized'});
           return;
         }
         next(err);
