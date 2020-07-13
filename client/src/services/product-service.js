@@ -9,6 +9,13 @@ const productService = {
       })
       .catch(console.error);
   },
+  getProductById: function (id) {
+    return axios
+      .get(`${baseUrl}/${id}`, {
+        withCredentials: true,
+      })
+      .catch(console.error);
+  },
   createProduct: function (data) {
     return axios
       .post(baseUrl, data, {
@@ -17,9 +24,11 @@ const productService = {
       .catch(console.error);
   },
   getUserProducts: function () {
-    return axios.get(`${baseUrl}/my-products`, {
-      withCredentials: true,
-    }).catch(console.error);
+    return axios
+      .get(`${baseUrl}/my-products`, {
+        withCredentials: true,
+      })
+      .catch(console.error);
   },
 };
 

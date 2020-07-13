@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Icon, Grid } from '@material-ui/core';
-import Cart from './Cart';
+import { Grid } from '@material-ui/core';
+import Basket from './Basket';
+import NavLink from './NavLink';
 
 const UnauthorizedNav = ({ classes }) => {
   return (
@@ -15,16 +15,8 @@ const UnauthorizedNav = ({ classes }) => {
         spacing={1}
         className={classes.navLink}
       >
-        <Button>
-          <Link to="/">
-            <Icon>home</Icon> Начало
-          </Link>
-        </Button>
-        <Button>
-          <Link className={classes.navLink} to="/shop">
-            <Icon>store_mall_directory</Icon> Магазин
-          </Link>
-        </Button>
+        <NavLink to={'/'} icon={'home'} title={'Начало'} />
+        <NavLink to={'/shop'} icon={'store_mall_directory'} title={'Магазин'} />
       </Grid>
       <Grid
         container
@@ -35,30 +27,13 @@ const UnauthorizedNav = ({ classes }) => {
         justify="flex-end"
         alignItems="flex-end"
       >
-        <Cart />
-        <Button>
-          <Link className={classes.navLink} to="/login">
-            <Icon>login</Icon> Login
-          </Link>
-        </Button>
-        <Button>
-          <Link className={classes.navLink} to="/register">
-            <Icon>perm_identity</Icon> Register
-          </Link>
-        </Button>
-        {/* <div color="inherit" className={classes.search}>
-            <div color="inherit" className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div> */}
+        <Basket />
+        <NavLink to={'/login'} icon={'login'} title={'Влез'} />
+        <NavLink
+          to={'/register'}
+          icon={'perm_identity'}
+          title={'Регистрация'}
+        />
       </Grid>
     </Fragment>
   );

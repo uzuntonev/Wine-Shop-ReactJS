@@ -17,6 +17,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import withForm from '../hocs/withForm';
 import { StoreContext } from '../Store/Store';
 import { login } from '../Store/actions';
+import InputField from '../InputField/InputField';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -62,7 +64,7 @@ const Login = ({
     e.preventDefault();
     runValidations().then((formData) => {
       dispatch(login(formData));
-      history.push('/');
+      history.push('/', {status: 'success'});
     });
   });
 
@@ -74,41 +76,33 @@ const Login = ({
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Влез
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Потребителско име"
-            name="email"
-            autoComplete="email"
-            onChange={handleOnChangeEmail}
-            onBlur={runControlValidation('email')}
-            error={!!formState.errors && !!formState.errors['email']}
-            helperText={formState.errors && formState.errors['email']}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={handleOnChangePassword}
-            onBlur={runControlValidation('password')}
-            error={!!formState.errors && !!formState.errors['password']}
-            helperText={formState.errors && formState.errors['password']}
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <InputField
+                label={'Email адрес'}
+                name={'email'}
+                changeHandler={handleOnChangeEmail}
+                runControlValidation={runControlValidation}
+                formState={formState}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputField
+                label={'Парола'}
+                name={'password'}
+                changeHandler={handleOnChangePassword}
+                runControlValidation={runControlValidation}
+                formState={formState}
+                type={'password'}
+              />
+            </Grid>
+          </Grid>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label="Запомни"
           />
           <Button
             type="submit"
@@ -118,12 +112,12 @@ const Login = ({
             className={classes.submit}
             disabled={formIsInvalid()}
           >
-            Sign In
+            Влез
           </Button>
           <Grid container>
             <Grid item xs>
               <Link to="/login" variant="body2">
-                Forgot password?
+                Забравена парола?
               </Link>
             </Grid>
             <Grid item>

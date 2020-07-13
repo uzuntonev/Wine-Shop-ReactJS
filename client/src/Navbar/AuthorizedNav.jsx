@@ -1,23 +1,18 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Grid } from '@material-ui/core';
-import { SearchIcon, MoreIcon } from '@material-ui/icons';
 import { AuthContext } from '../App/ContextWrapper';
-import userService from '../services/user-service';
 import { logout } from '../Store/actions';
 import { StoreContext } from '../Store/Store';
+import NavLink from './NavLink';
 
 const AuthorizedNav = ({ classes, history }) => {
   const { auth, setAuth } = useContext(AuthContext);
   const { state, dispatch } = useContext(StoreContext);
 
   const handlerLogout = () => {
-    // userService.logout().then(() => {
-    //   setAuth(false);
-    //   history.push('/')
-    // })
-    dispatch(logout())
-    history.push('/')
+    dispatch(logout());
+    history.push('/');
   };
   return (
     <Fragment>
@@ -30,16 +25,12 @@ const AuthorizedNav = ({ classes, history }) => {
         spacing={1}
         className={classes.navLink}
       >
-        <Button>
-          <Link to="/">
-            <Icon>home</Icon> Начало
-          </Link>
-        </Button>
-        <Button>
-          <Link className={classes.navLink} to="/add-product">
-            <Icon>add_business</Icon> Добави продукт
-          </Link>
-        </Button>
+        <NavLink to={'/'} icon={'home'} title={'Начало'} />
+        <NavLink
+          to={'/add-product'}
+          icon={'add_business'}
+          title={'Добави продукт'}
+        />
       </Grid>
       <Grid
         container
@@ -50,21 +41,12 @@ const AuthorizedNav = ({ classes, history }) => {
         justify="flex-end"
         alignItems="flex-end"
       >
-        <Button>
-          <Link className={classes.navLink} to="/my-products">
-            <Icon>account_circle</Icon> Моите продукти
-          </Link>
-        </Button>
-        <Button>
-          <Link className={classes.navLink} to="/test">
-            <Icon>account_circle</Icon> TEST
-          </Link>
-        </Button>
-        <Button onClick={handlerLogout}>
-          <Link className={classes.navLink} to="#">
-            <Icon>cancel</Icon> Logout
-          </Link>
-        </Button>
+        <NavLink
+          to={'/my-products'}
+          icon={'account_circle'}
+          title={'Моите продукти'}
+        />
+        <NavLink to={'#'} icon={'cancel'} title={'Излез'} handler={handlerLogout}/>
 
         {/* <div color="inherit" className={classes.search}>
           <div color="inherit" className={classes.searchIcon}>

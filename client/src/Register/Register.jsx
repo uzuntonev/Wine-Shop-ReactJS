@@ -19,7 +19,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import withForm from '../hocs/withForm';
 import { StoreContext } from '../Store/Store';
 import { register } from '../Store/actions';
-
+import InputField from '../InputField/InputField';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,7 +56,6 @@ const Register = ({
   const classes = useStyles();
   const { state, dispatch } = useContext(StoreContext);
 
-
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangePassword = changeHandlerFactory('password');
   const handleOnChangeEmail = changeHandlerFactory('email');
@@ -70,16 +69,6 @@ const Register = ({
       history.push('/');
     });
   });
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   runValidations().then((formData) => {
-  //     userService.register(formData).then(({ data }) => {
-  //       console.log(data);
-  //       setAuth(true);
-  //       history.push('/');
-  //     });
-  //   });
-  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -93,83 +82,42 @@ const Register = ({
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={7}>
-              <TextField
-                autoComplete="name"
-                name="name"
-                variant="outlined"
-                required
-                fullWidth
-                id="name"
-                label="Потребителско име"
-                onChange={handleOnChangeName}
-                onBlur={runControlValidation('name')}
-                error={!!formState.errors && !!formState.errors['name']}
-                helperText={formState.errors && formState.errors['name']}
-              />
-            </Grid>
-            <Grid item xs={12} sm={5}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel id="userType">Тип потребител</InputLabel>
-                <Select
-                  labelId="userType"
-                  id="userType"
-                  name="userType"
-                  label="Тип потребител"
-                  onChange={handleOnChangeUserType}
-                  error={!!formState.errors && !!formState.errors['userType']}
-                >
-                  <MenuItem value={'seller'}>Търговец</MenuItem>
-                  <MenuItem value={'buyer'}>Купувач</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}></Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Адрес"
-                name="email"
-                autoComplete="email"
-                onChange={handleOnChangeEmail}
-                onBlur={runControlValidation('email')}
-                error={!!formState.errors && !!formState.errors['email']}
-                helperText={formState.errors && formState.errors['email']}
+              <InputField
+                label={'Потребителско име'}
+                name={'name'}
+                changeHandler={handleOnChangeName}
+                runControlValidation={runControlValidation}
+                formState={formState}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Парола"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handleOnChangePassword}
-                onBlur={runControlValidation('password')}
-                error={!!formState.errors && !!formState.errors['password']}
-                helperText={formState.errors && formState.errors['password']}
+              <InputField
+                label={'Email адрес'}
+                name={'email'}
+                changeHandler={handleOnChangeEmail}
+                runControlValidation={runControlValidation}
+                formState={formState}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="rePassword"
-                label="Потвърди парола"
-                type="password"
-                id="rePassword"
-                autoComplete="current-rePassword"
-                onChange={handleOnChangeRePassword}
-                onBlur={runControlValidation('rePassword')}
-                error={!!formState.errors && !!formState.errors['rePassword']}
-                helperText={formState.errors && formState.errors['rePassword']}
+              <InputField
+                label={'Парола'}
+                name={'password'}
+                changeHandler={handleOnChangePassword}
+                runControlValidation={runControlValidation}
+                formState={formState}
+                type={'password'}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputField
+                label={'Потвърди парола'}
+                name={'rePassword'}
+                changeHandler={handleOnChangeRePassword}
+                runControlValidation={runControlValidation}
+                formState={formState}
+                type={'password'}
               />
             </Grid>
           </Grid>
@@ -181,7 +129,7 @@ const Register = ({
             className={classes.submit}
             disabled={formIsInvalid()}
           >
-            Sign Up
+            Регистрация
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
@@ -198,7 +146,6 @@ const Register = ({
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
-  userType: yup.string().required('Field is required'),
   email: yup
     .string()
     .email('Must be valid email')
@@ -219,7 +166,6 @@ const initialState = {
   email: '',
   password: '',
   rePassword: '',
-  userType: '',
 };
 
 export default withForm(Register, initialState, schema);

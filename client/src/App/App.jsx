@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import {
+  createMuiTheme,
+  ThemeProvider,
+  makeStyles,
+} from '@material-ui/core/styles';
+import Context from '../Store/Store';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import AppRouter from './AppRouter';
-import { makeStyles } from '@material-ui/core/styles';
-import StoreContext from '../Store/Store';
-
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import Toast from './Toast';
 
 const theme = createMuiTheme({
   palette: {
@@ -28,13 +31,14 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <StoreContext>
+        <Context>
+          <Toast />
           <Navbar />
           <React.Suspense fallback={<h2>Loading...</h2>}>
             <AppRouter />
           </React.Suspense>
           <Footer />
-        </StoreContext>
+        </Context>
       </BrowserRouter>
     </ThemeProvider>
   );
