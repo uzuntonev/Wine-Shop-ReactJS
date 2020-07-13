@@ -29,6 +29,14 @@ module.exports = {
     const newProduct = req.body;
     const { _id: userId } = req.user;
 
+    const { year, size, price } = req.body;
+    if (isNaN(year) || isNaN(size) || isNaN(price)) {
+      res
+        .status(400)
+        .send({ msg: "field 'year', 'size', 'price' must be numbers " });
+        return;
+    }
+
     ProductModel.create({ ...newProduct, creatorId: userId })
       .then((product) => {
         Promise.all([

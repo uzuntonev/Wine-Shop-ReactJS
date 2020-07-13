@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
-    required: true,
   },
   products: [{ type: ObjectId, ref: 'Product' }],
   date: {
