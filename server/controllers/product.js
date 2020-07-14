@@ -29,14 +29,19 @@ module.exports = {
     const newProduct = req.body;
     const { _id: userId } = req.user;
 
-    const { year, size, price } = req.body;
+    const { year, size, price, description, name, type } = req.body;
     if (isNaN(year) || isNaN(size) || isNaN(price)) {
       res
         .status(400)
         .send({ msg: "field 'year', 'size', 'price' must be numbers " });
         return;
     }
-
+    if (!description || !name || !price || !year || !size || !type) {
+      res
+        .status(400)
+        .send({ msg: "All field should be filled" });
+        return;
+    }
     ProductModel.create({ ...newProduct, creatorId: userId })
       .then((product) => {
         Promise.all([
