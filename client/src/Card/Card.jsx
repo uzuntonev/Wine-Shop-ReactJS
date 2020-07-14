@@ -1,19 +1,9 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment } from 'react';
 import { Image } from 'cloudinary-react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-} from '@material-ui/core';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import productService from '../services/product-service';
-import { StoreContext } from '../Store/Store';
-import { addToCart } from '../Store/actions';
+import { Card, CardActionArea, CardContent } from '@material-ui/core';
+import NavLink from '../NavLink/NavLink';
+import ProductCardActions from './ProductCardActions';
 const useStyles = makeStyles((theme) => {
   return {
     media: {
@@ -48,28 +38,23 @@ const useStyles = makeStyles((theme) => {
 });
 const ProductCard = ({ product }) => {
   const classes = useStyles();
-  const { state, dispatch} = useContext(StoreContext)
-  const addToCartHandler = (product) => {
-      dispatch(addToCart(product))
-    // productService.getProductById(product._id).then(({data}) => {
-    //     console.log(data);
-    // })
-console.log(state.cart);
-  };
+
   return (
     <Fragment>
       <Card className={classes.imageCard}>
-        <CardActionArea
-          className={classes.imageActionArea}
-          onClick={() => console.log('go to details')}
-        >
-          <Image
-            className={classes.media}
-            publicId={product.imageUrl}
-            fetch-format="auto"
-            quality="auto"
-          />
-        </CardActionArea>
+        <NavLink to={`details/${product._id}`}>
+          <CardActionArea
+            className={classes.imageActionArea}
+            onClick={() => console.log('go to details')}
+          >
+            <Image
+              className={classes.media}
+              publicId={product.imageUrl}
+              fetch-format="auto"
+              quality="auto"
+            />
+          </CardActionArea>
+        </NavLink>
       </Card>
       <Card className={classes.cardInfo}>
         <CardContent>
@@ -82,23 +67,7 @@ console.log(state.cart);
             <span>{product.price}лв</span>
           </div>
         </CardContent>
-        <CardActions className={classes.actionButtons}>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => addToCartHandler(product)}
-          >
-            <AddShoppingCartIcon />
-            Купи
-          </Button>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => console.log('go to details')}
-          >
-            <MoreHorizIcon />
-          </Button>
-        </CardActions>
+        <ProductCardActions product={product} />
       </Card>
     </Fragment>
   );

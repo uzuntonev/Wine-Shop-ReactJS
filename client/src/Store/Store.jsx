@@ -100,17 +100,20 @@ const actionMap = {
     toast: { status: '', message: '' },
   }),
   [ActionTypes.addToCartSuccess]: (state, { product }) => {
-    let products = [ ...state.cart ]
-    const currentProduct = products.find(p => p._id === product._id);
-    if(currentProduct){
+    let products = [...state.cart];
+    const currentProduct = products.find((p) => p._id === product._id);
+    if (currentProduct) {
       const index = state.cart.indexOf(currentProduct);
-      products[index] = {...currentProduct, quantity: currentProduct.quantity + 1}
-    }else {
-      products = products.concat({ ...product, quantity: 1 }) 
+      products[index] = {
+        ...currentProduct,
+        quantity: currentProduct.quantity + 1,
+      };
+    } else {
+      products = products.concat({ ...product, quantity: 1 });
     }
     return {
       ...state,
-      cart: products ,
+      cart: products,
       toast: { status: 'success', message: 'Product add to cart successfully' },
     };
   },
@@ -118,6 +121,50 @@ const actionMap = {
     ...state,
     error,
     toast: { status: 'error', message: 'Something wrong' },
+  }),
+  [ActionTypes.updateQuantity]: (state) => ({
+    ...state,
+    error: null,
+    toast: { status: '', message: '' },
+  }),
+  [ActionTypes.updateQuantitySuccess]: (state, { product, value }) => {
+    let products = [...state.cart];
+    const currentProduct = products.find((p) => p._id === product._id);
+    const index = products.indexOf(currentProduct);
+    products[index] = {
+      ...currentProduct,
+      quantity: value,
+    };
+    return { ...state, cart: products, toast: { status: '', message: '' } };
+  },
+  [ActionTypes.updateQuantityFailure]: (state, { error }) => ({
+    ...state,
+    error,
+  }),
+  [ActionTypes.removeItemFromCart]: (state) => ({
+    ...state,
+    error: null,
+    toast: { status: '', message: '' },
+  }),
+  [ActionTypes.removeItemFromCartSuccess]: (state, { product }) => {
+    const products = state.cart.filter((p) => p._id !== product._id);
+    return { ...state, cart: products };
+  },
+  [ActionTypes.removeItemFromCartFailure]: (state, { error }) => ({
+    ...state,
+    error,
+  }),
+  [ActionTypes.resetCart]: (state) => ({
+    ...state,
+    error: null,
+    toast: { status: '', message: '' },
+  }),
+  [ActionTypes.resetCartSuccess]: (state) => {
+    return { ...state, cart: [] };
+  },
+  [ActionTypes.resetCartFailure]: (state, { error }) => ({
+    ...state,
+    error,
   }),
 };
 

@@ -11,7 +11,7 @@ const Toast = () => {
     const { status, message } = state.toast;
     toast[status](message)
   },[state.toast.message]);
-  return <ToastContainer />;
+  return <ToastContainer autoClose={3000} position="bottom-right" />;
 };
 
 export default Toast;
