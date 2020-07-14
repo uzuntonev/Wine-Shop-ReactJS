@@ -9,7 +9,7 @@ import Context from '../Store/Store';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import AppRouter from './AppRouter';
-import Toast from './Toast';
+import Toast from '../Toast/Toast';
 
 const theme = createMuiTheme({
   palette: {

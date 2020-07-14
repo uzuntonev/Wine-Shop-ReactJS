@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import { ShoppingBasket } from '@material-ui/icons';
 import { StoreContext } from '../Store/Store';
+import NavLink from '../NavLink/NavLink';
 
 const useStyles = makeStyles((theme) => ({
   price: {
@@ -27,12 +27,12 @@ const Basket = (props) => {
 
   return (
     <IconButton className={classes.price} color="inherit">
-      <Link to={'/cart'}>
+      <NavLink to={'/cart'}>
         <Badge badgeContent={basket.count} color="secondary">
           <ShoppingBasket />
         </Badge>
         <p className={classes.price}> - {basket.price.toFixed(2)} лв.</p>
-      </Link>
+      </NavLink>
     </IconButton>
   );
 };

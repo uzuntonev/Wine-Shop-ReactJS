@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { Grid, createStyles, Container } from '@material-ui/core/';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '28px',
     color: theme.palette.primary.text,
   },
-  content: {},
   container: {
     padding: '200px',
   },
@@ -42,9 +41,9 @@ const useStyles = makeStyles((theme) => ({
 const Welcome = () => {
   const classes = useStyles();
   return (
-    <div>
+    <Fragment>
       <Grid container spacing={1}>
-        <Grid container item xs={5}>
+        <Grid item xs={5}>
           <img src="/home-background.jpg" className={classes.img} />
         </Grid>
         <Grid container justify="center" alignItems="center" item xs={7}>
@@ -64,20 +63,20 @@ const Welcome = () => {
             <img src="/black-signature.png" className={classes.signature} />
           </Container>
         </Grid>
+        <Grid container item xs={12} className={classes.bottomContainer}>
+          <img src="/wine-yard.jpg" className={classes.bottomImg} />
+          <div className={classes.bottomContent}>
+            <p className={classes.subheader}>ЛОЗЯ</p>
+            <p className={classes.header}>Локация</p>
+            <p className={classes.content}>
+              ЛОЗЯ Локация Нашите лозови насаждения се намират в землището на
+              гр. Бяла черква, област Велико Търново. Територията е известна от
+              дълги години с традициите си в отглеждането на грозде.
+            </p>
+          </div>
+        </Grid>
       </Grid>
-      <div className={classes.bottomContainer}>
-        <img src="/wine-yard.jpg" className={classes.bottomImg} />
-        <div className={classes.bottomContent}>
-          <p className={classes.subheader}>ЛОЗЯ</p>
-          <p className={classes.header}>Локация</p>
-          <p className={classes.content}>
-            ЛОЗЯ Локация Нашите лозови насаждения се намират в землището на гр.
-            Бяла черква, област Велико Търново. Територията е известна от дълги
-            години с традициите си в отглеждането на грозде.
-          </p>
-        </div>
-      </div>
-    </div>
+    </Fragment>
   );
 };
 

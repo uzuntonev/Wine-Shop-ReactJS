@@ -8,15 +8,18 @@ import {
   Typography,
   Container,
   IconButton,
+  TextareaAutosize,
 } from '@material-ui/core/';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import withForm from '../hocs/withForm';
 import { openUploadWidget } from '../services/cloudinary-service';
 import { StoreContext } from '../Store/Store';
 import { createProduct } from '../Store/actions';
 import InputField from '../InputField/InputField';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -28,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '30px',
     borderRadius: '20px',
     boxShadow: `3px 3px 5px ${theme.palette.primary.text}`,
-
   },
   avatar: {
     margin: theme.spacing(1),
@@ -43,6 +45,15 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     pointerEvents: 'fill',
+  },
+  textarea: {
+    resize: 'none',
+  },
+  error: {
+    color: '#f44336',
+    fontSize: 12,
+    marginLeft: 14,
+    marginTop: 0,
   },
 }));
 
@@ -64,6 +75,7 @@ const Create = ({
   const handleOnChangeAlcohol = changeHandlerFactory('alcohol');
   const handleOnChangeSize = changeHandlerFactory('size');
   const handleOnChangePrice = changeHandlerFactory('price');
+  const handleOnChangeTextarea = changeHandlerFactory('description');
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
@@ -164,8 +176,7 @@ const Create = ({
                 formState={formState}
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid item xs={7}>
               <label htmlFor="icon-button-file">
                 Прикачи снимка
                 <IconButton
@@ -177,6 +188,25 @@ const Create = ({
                   <PhotoCamera />
                 </IconButton>
               </label>
+            </Grid>
+            <Grid container justify='center' alignItems='center' item xs={5}>
+              { image ? <CheckCircleIcon htmlColor={'green'} /> : null }
+            </Grid>
+            <Grid item xs={12}>
+              <TextareaAutosize
+                cols={45}
+                rows={10}
+                className={classes.textarea}
+                placeholder="Описание"
+                id={'description'}
+                onChange={handleOnChangeTextarea}
+                onBlur={runControlValidation('description')}
+              />
+              {formState.errors && formState.errors['description'] ? (
+                <p className={classes.error}>
+                  {formState.errors['description']}
+                </p>
+              ) : null}
             </Grid>
           </Grid>
           <Button
@@ -205,6 +235,7 @@ const schema = yup.object().shape({
   alcohol: yup.string().required('Alcohol name is required'),
   price: yup.string().required('Price is required'),
   size: yup.string().required('Size is required'),
+  description: yup.string().required('Description is required'),
 });
 
 const initialState = {
@@ -214,6 +245,7 @@ const initialState = {
   alcohol: '',
   size: '',
   price: '',
+  description: '',
 };
 
 export default withForm(Create, initialState, schema);

@@ -3,10 +3,10 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Welcome from '../Welcome/Welcome';
-import Create from '../Product/Create';
-import List from '../Product/List';
-import Cart from '../Cart/Cart';
-
+const Details = React.lazy(() => import('../Product/Details'));
+const List = React.lazy(() => import('../Product/List'));
+const Cart = React.lazy(() => import('../Cart/Cart'));
+const Create = React.lazy(() => import('../Product/Create'));
 const AppRouter = () => {
   return (
     <Switch>
@@ -17,6 +17,7 @@ const AppRouter = () => {
       <Route path="/my-products" component={List} />
       <Route path="/shop" component={List} />
       <Route path="/cart" component={Cart} />
+      <Route path="/details/:id" component={Details} />
     </Switch>
   );
 };
