@@ -62,7 +62,7 @@ const Login = ({
       e.preventDefault();
       runValidations().then((formData) => {
         dispatch(login(formData));
-        history.push('/', { status: 'success' });
+        // history.push('/');
       });
     },
     [history, dispatch, runValidations]

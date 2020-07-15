@@ -9,6 +9,7 @@ import Navbar from '../components/common/Navbar/Navbar';
 import Footer from '../components/common/Footer/Footer';
 import AppRouter from './AppRouter';
 import Toast from '../components/common/Toast/Toast';
+import Loader from '../components/Loader/Loader';
 
 const theme = createMuiTheme({
   palette: {
@@ -33,7 +34,7 @@ function App() {
         <Context>
           <Toast />
           <Navbar />
-          <React.Suspense fallback={<h2>Loading...</h2>}>
+          <React.Suspense fallback={ <Loader /> }>
             <AppRouter />
           </React.Suspense>
           <Footer />
