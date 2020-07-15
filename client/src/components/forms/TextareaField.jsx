@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { TextareaAutosize } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -41,5 +42,15 @@ const TextareaField = ({
     </Fragment>
   );
 };
+
+TextareaField.propTypes = {
+  cols: PropTypes.number,
+  rows: PropTypes.number,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  handleChange: PropTypes.func,
+  runControlValidation: PropTypes.func,
+  formState: PropTypes.object,
+}
 
 export default TextareaField;

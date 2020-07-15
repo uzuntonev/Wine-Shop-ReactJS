@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import { logout } from '../../../Store/actions';
 import { StoreContext } from '../../../Store/Store';
@@ -74,6 +75,11 @@ const AuthorizedNav = ({ classes, history }) => {
       </Grid>
     </Fragment>
   );
+};
+
+AuthorizedNav.propTypes = {
+  classes: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default AuthorizedNav;

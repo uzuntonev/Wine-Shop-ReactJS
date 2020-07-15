@@ -1,4 +1,5 @@
 import React, { useContext, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import {
@@ -133,6 +134,15 @@ const schema = yup.object().shape({
 const initialState = {
   email: '',
   password: '',
+};
+
+Login.propTypes = {
+  changeHandlerFactory: PropTypes.func,
+  formState: PropTypes.object,
+  runValidations: PropTypes.func,
+  runControlValidation: PropTypes.func,
+  formIsInvalid: PropTypes.func,
+  history: PropTypes.object,
 };
 
 export default withForm(Login, initialState, schema);

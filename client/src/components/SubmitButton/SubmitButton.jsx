@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -22,5 +23,10 @@ const SubmitButton = ({ title, disabled }) => {
     </Button>
   );
 };
+
+SubmitButton.propTypes = {
+  title: PropTypes.string,
+  disabled: PropTypes.bool
+}
 
 export default SubmitButton;

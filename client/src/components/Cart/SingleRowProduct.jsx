@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { Image, Transformation } from 'cloudinary-react';
 import { TableCell, TableRow, IconButton } from '@material-ui/core';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -77,5 +78,9 @@ const SingleRowProduct = ({ product }) => {
     </StyledTableRow>
   );
 };
+
+SingleRowProduct.propTypes = {
+  product: PropTypes.object
+}
 
 export default SingleRowProduct;

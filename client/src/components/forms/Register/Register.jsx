@@ -1,4 +1,5 @@
 import React, { useContext, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import {
@@ -151,6 +152,15 @@ const initialState = {
   email: '',
   password: '',
   rePassword: '',
+};
+
+Register.propTypes = {
+  changeHandlerFactory: PropTypes.func,
+  formState: PropTypes.object,
+  runValidations: PropTypes.func,
+  runControlValidation: PropTypes.func,
+  formIsInvalid: PropTypes.func,
+  history: PropTypes.object,
 };
 
 export default withForm(Register, initialState, schema);

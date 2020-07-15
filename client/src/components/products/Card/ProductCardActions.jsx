@@ -1,14 +1,15 @@
 import React, { useContext, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { StoreContext } from '../../../Store/Store';
 import { CardActions, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { addToCart } from '../../../Store/actions';
 import NavLink from '../../NavLink/NavLink';
+
 const useStyles = makeStyles((theme) => {
   return {
     actionButtons: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
+
 const ProductCardActions = ({ product }) => {
   const classes = useStyles();
 
@@ -55,5 +57,9 @@ const ProductCardActions = ({ product }) => {
     </CardActions>
   );
 };
+
+ProductCardActions.propTypes = {
+  product: PropTypes.object
+}
 
 export default ProductCardActions;

@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { updateQuantitySuccess } from '../../Store/actions';
@@ -58,5 +59,9 @@ const InputQuantity = ({ product }) => {
     </Fragment>
   );
 };
+
+InputQuantity.propTypes = {
+  product: PropTypes.object
+}
 
 export default InputQuantity;

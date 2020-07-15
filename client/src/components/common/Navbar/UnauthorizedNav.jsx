@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import Basket from '../../Basket/Basket';
 import NavLink from '../../NavLink/NavLink';
@@ -51,6 +52,10 @@ const UnauthorizedNav = ({ classes }) => {
       </Grid>
     </Fragment>
   );
+};
+
+UnauthorizedNav.propTypes = {
+  classes: PropTypes.object
 };
 
 export default UnauthorizedNav;
