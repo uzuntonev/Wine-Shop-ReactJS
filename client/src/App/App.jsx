@@ -3,13 +3,12 @@ import { BrowserRouter } from 'react-router-dom';
 import {
   createMuiTheme,
   ThemeProvider,
-  makeStyles,
 } from '@material-ui/core/styles';
 import Context from '../Store/Store';
-import Navbar from '../Navbar/Navbar';
-import Footer from '../Footer/Footer';
+import Navbar from '../components/common/Navbar/Navbar';
+import Footer from '../components/common/Footer/Footer';
 import AppRouter from './AppRouter';
-import Toast from '../Toast/Toast';
+import Toast from '../components/common/Toast/Toast';
 
 const theme = createMuiTheme({
   palette: {
@@ -20,14 +19,14 @@ const theme = createMuiTheme({
   },
 });
 
-const useStyles = makeStyles((theme) => ({
-  app: {
-    // backgroundColor: '#F1F1F1',
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   app: {
+//     backgroundColor: '#F1F1F1',
+//   },
+// }));
 
 function App() {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>

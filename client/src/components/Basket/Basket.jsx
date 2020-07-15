@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import { ShoppingBasket } from '@material-ui/icons';
-import { StoreContext } from '../Store/Store';
+import { StoreContext } from '../../Store/Store';
 import NavLink from '../NavLink/NavLink';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Basket = (props) => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(StoreContext);
+  const { state } = useContext(StoreContext);
 
   const basket = state.cart.reduce(
     (acc, curr) => {

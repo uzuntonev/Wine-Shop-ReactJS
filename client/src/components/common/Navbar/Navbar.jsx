@@ -2,10 +2,9 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppBar, Toolbar, Grid } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { AuthContext } from '../App/ContextWrapper';
 import AuthorizedNav from './AuthorizedNav';
 import UnauthorizedNav from './UnauthorizedNav';
-import { StoreContext } from '../Store/Store';
+import { StoreContext } from '../../../Store/Store';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -101,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const classes = useStyles();
-  const { state , dispatch } = useContext(StoreContext);
+  const { state } = useContext(StoreContext);
   const history = useHistory();
 
   return (
@@ -110,7 +109,7 @@ const Navbar = () => {
         <Toolbar className={classes.toolbar}>
           <Grid container justify="center" alignItems="center" spacing={1}>
             <Grid container alignItems="center" item xs={1}>
-              <img src="/ruevite.png" className={classes.logo} />
+              <img src="/ruevite.png" className={classes.logo} alt='img'/>
             </Grid>
             {state.isAuth ? (
               <AuthorizedNav classes={classes} history={history} />
@@ -126,7 +125,7 @@ const Navbar = () => {
 
 export default Navbar;
 
-{
+
   /* <Grid
               container
               justify="center"
@@ -200,4 +199,4 @@ export default Navbar;
                 />
               </div> 
             </Grid> */
-}
+

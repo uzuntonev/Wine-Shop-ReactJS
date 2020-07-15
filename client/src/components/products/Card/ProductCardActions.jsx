@@ -1,5 +1,5 @@
 import React, { useContext, useCallback } from 'react';
-import { StoreContext } from '../Store/Store';
+import { StoreContext } from '../../../Store/Store';
 import { CardActions, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -7,8 +7,8 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { addToCart } from '../Store/actions';
-import NavLink from '../NavLink/NavLink';
+import { addToCart } from '../../../Store/actions';
+import NavLink from '../../NavLink/NavLink';
 const useStyles = makeStyles((theme) => {
   return {
     actionButtons: {
@@ -21,9 +21,12 @@ const ProductCardActions = ({ product }) => {
   const classes = useStyles();
 
   const { state, dispatch } = useContext(StoreContext);
-  const addToCartHandler = useCallback((product) => {
-    dispatch(addToCart(product));
-  }, []);
+  const addToCartHandler = useCallback(
+    (product) => {
+      dispatch(addToCart(product));
+    },
+    [dispatch]
+  );
 
   return !state.isAuth ? (
     <CardActions className={classes.actionButtons}>
@@ -43,16 +46,12 @@ const ProductCardActions = ({ product }) => {
     </CardActions>
   ) : (
     <CardActions className={classes.actionButtons}>
-      <Button
-        size="small"
-        color="primary"
-      >
+      <Button size="small" color="primary">
         <EditIcon />
       </Button>
-        <Button size="small" color="primary">
-          <DeleteIcon />
-        </Button>
- 
+      <Button size="small" color="primary">
+        <DeleteIcon />
+      </Button>
     </CardActions>
   );
 };

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Grid } from '@material-ui/core';
-import Basket from './Basket';
-import NavLink from '../NavLink/NavLink';
+import Basket from '../../Basket/Basket';
+import NavLink from '../../NavLink/NavLink';
 
 const UnauthorizedNav = ({ classes }) => {
   return (

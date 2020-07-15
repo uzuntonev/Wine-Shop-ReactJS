@@ -1,14 +1,11 @@
 import React, { Fragment, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Icon, Grid } from '@material-ui/core';
-import { AuthContext } from '../App/ContextWrapper';
-import { logout } from '../Store/actions';
-import { StoreContext } from '../Store/Store';
-import NavLink from '../NavLink/NavLink';
+import { Grid } from '@material-ui/core';
+import { logout } from '../../../Store/actions';
+import { StoreContext } from '../../../Store/Store';
+import NavLink from '../../NavLink/NavLink';
 
 const AuthorizedNav = ({ classes, history }) => {
-  const { auth, setAuth } = useContext(AuthContext);
-  const { state, dispatch } = useContext(StoreContext);
+  const { dispatch } = useContext(StoreContext);
 
   const handlerLogout = () => {
     dispatch(logout());

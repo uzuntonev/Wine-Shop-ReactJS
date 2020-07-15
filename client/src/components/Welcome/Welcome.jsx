@@ -1,8 +1,6 @@
-import React, { useEffect, Fragment } from 'react';
-import { Grid, createStyles, Container } from '@material-ui/core/';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { Fragment } from 'react';
+import { Grid, Container } from '@material-ui/core/';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   img: {
@@ -44,7 +42,7 @@ const Welcome = () => {
     <Fragment>
       <Grid container spacing={1}>
         <Grid item xs={5}>
-          <img src="/home-background.jpg" className={classes.img} />
+          <img src="/home-background.jpg" className={classes.img} alt='img' />
         </Grid>
         <Grid container justify="center" alignItems="center" item xs={7}>
           <Container fixed className={classes.container}>
@@ -60,11 +58,11 @@ const Welcome = () => {
               правим вината такива, каквито ги обичаме, за да може да усетите и
               вие, нашите приятели, вкуса на истинското вино.
             </p>
-            <img src="/black-signature.png" className={classes.signature} />
+            <img src="/black-signature.png" className={classes.signature} alt='img' />
           </Container>
         </Grid>
         <Grid container item xs={12} className={classes.bottomContainer}>
-          <img src="/wine-yard.jpg" className={classes.bottomImg} />
+          <img src="/wine-yard.jpg" className={classes.bottomImg} alt='img' />
           <div className={classes.bottomContent}>
             <p className={classes.subheader}>ЛОЗЯ</p>
             <p className={classes.header}>Локация</p>

@@ -4,8 +4,8 @@ import { TableCell, TableRow, IconButton } from '@material-ui/core';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import InputQuantity from './InputQuantity';
-import { StoreContext } from '../Store/Store';
-import { removeItemFromCartSuccess } from '../Store/actions'
+import { StoreContext } from '../../Store/Store';
+import { removeItemFromCartSuccess } from '../../Store/actions'
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const SingleRowProduct = ({ product }) => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(StoreContext);
+  const { dispatch } = useContext(StoreContext);
   const removeItemFromCart = (product) => {
     dispatch(removeItemFromCartSuccess(product));
   };

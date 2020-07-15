@@ -1,10 +1,10 @@
 import React, { Fragment, useContext, useCallback } from 'react';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
-import { updateQuantitySuccess } from '../Store/actions';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { updateQuantitySuccess } from '../../Store/actions';
+import {  makeStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
-import { StoreContext } from '../Store/Store';
+import { StoreContext } from '../../Store/Store';
 const useStyles = makeStyles((theme) => ({
   input: {
     background: 'transparent',
@@ -14,11 +14,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 const InputQuantity = ({ product }) => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(StoreContext);
+  const { dispatch } = useContext(StoreContext);
 
   const handleChange = useCallback((e, product) => {
     dispatch(updateQuantitySuccess({ product, value: +e.target.value }));
-  }, []);
+  }, [dispatch]);
   const changeQuantity = (e, action, product) => {
     const element = document.getElementById(product._id);
     const mapAction = {
