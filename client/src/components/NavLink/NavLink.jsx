@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Icon } from '@material-ui/core';
 const NavLink = ({ to, icon, title, handler, children }) => {
@@ -12,5 +13,13 @@ const NavLink = ({ to, icon, title, handler, children }) => {
     </Button>
   );
 };
+
+NavLink.propTypes = {
+  to: PropTypes.string,
+  icon: PropTypes.string,
+  title: PropTypes.string,
+  handler: PropTypes.oneOfType([PropTypes.func, undefined]),
+  children: PropTypes.node
+}
 
 export default NavLink;

@@ -1,4 +1,5 @@
 import React, { useContext, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import {
   Avatar,
@@ -224,6 +225,15 @@ const initialState = {
   size: '',
   price: '',
   description: '',
+};
+
+Create.propTypes = {
+  changeHandlerFactory: PropTypes.func,
+  formState: PropTypes.object,
+  runValidations: PropTypes.func,
+  runControlValidation: PropTypes.func,
+  formIsInvalid: PropTypes.func,
+  history: PropTypes.object,
 };
 
 export default withForm(Create, initialState, schema);
