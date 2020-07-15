@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import {
   Avatar,
-  Button,
   CssBaseline,
-  TextField,
   FormControlLabel,
   Checkbox,
   Grid,
@@ -14,10 +12,11 @@ import {
 } from '@material-ui/core/';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import withForm from '../hocs/withForm';
-import { StoreContext } from '../Store/Store';
-import { login } from '../Store/actions';
-import InputField from '../InputField/InputField';
+import withForm from '../../../hocs/withForm';
+import { StoreContext } from '../../../Store/Store';
+import { login } from '../../../Store/actions';
+import InputField from '../InputField';
+import SubmitButton from '../../SubmitButton/SubmitButton';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,9 +37,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
   link: {
     pointerEvents: 'fill',
   },
@@ -55,18 +51,21 @@ const Login = ({
   history,
 }) => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(StoreContext);
+  const { dispatch } = useContext(StoreContext);
 
   const handleOnChangeEmail = changeHandlerFactory('email');
   const handleOnChangePassword = changeHandlerFactory('password');
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    runValidations().then((formData) => {
-      dispatch(login(formData));
-      history.push('/', {status: 'success'});
-    });
-  });
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      runValidations().then((formData) => {
+        dispatch(login(formData));
+        history.push('/', { status: 'success' });
+      });
+    },
+    [history, dispatch, runValidations]
+  );
 
   return (
     <Container component="main" maxWidth="xs">
@@ -104,16 +103,7 @@ const Login = ({
             control={<Checkbox value="remember" color="primary" />}
             label="Запомни"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            disabled={formIsInvalid()}
-          >
-            Влез
-          </Button>
+          <SubmitButton disabled={formIsInvalid()} title={'Влез'} />
           <Grid container>
             <Grid item xs>
               <Link to="/login" variant="body2">

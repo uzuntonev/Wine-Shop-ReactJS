@@ -2,23 +2,24 @@ import React, { useContext, useState, useCallback } from 'react';
 import * as yup from 'yup';
 import {
   Avatar,
-  Button,
   CssBaseline,
   Grid,
   Typography,
   Container,
   IconButton,
-  TextareaAutosize,
 } from '@material-ui/core/';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import withForm from '../hocs/withForm';
-import { openUploadWidget } from '../services/cloudinary-service';
-import { StoreContext } from '../Store/Store';
-import { createProduct } from '../Store/actions';
-import InputField from '../InputField/InputField';
+import withForm from '../../../hocs/withForm';
+import { openUploadWidget } from '../../../services/cloudinary-service';
+import { StoreContext } from '../../../Store/Store';
+import { createProduct } from '../../../Store/actions';
+import InputField from '../InputField';
+import TextareaField from '../TextareaField';
+import SubmitButton from '../../SubmitButton/SubmitButton';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,15 +47,6 @@ const useStyles = makeStyles((theme) => ({
   link: {
     pointerEvents: 'fill',
   },
-  textarea: {
-    resize: 'none',
-  },
-  error: {
-    color: '#f44336',
-    fontSize: 12,
-    marginLeft: 14,
-    marginTop: 0,
-  },
 }));
 
 const Create = ({
@@ -67,7 +59,7 @@ const Create = ({
 }) => {
   const classes = useStyles();
   const [image, setImage] = useState();
-  const { state, dispatch } = useContext(StoreContext);
+  const { dispatch } = useContext(StoreContext);
 
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangeYear = changeHandlerFactory('year');
@@ -89,7 +81,7 @@ const Create = ({
       dispatch(createProduct(product));
       history.push('/');
     });
-  });
+  }, [history, dispatch, runValidations, image]);
 
   const beginUpload = (tag) => {
     const uploadOptions = {
@@ -189,36 +181,22 @@ const Create = ({
                 </IconButton>
               </label>
             </Grid>
-            <Grid container justify='center' alignItems='center' item xs={5}>
-              { image ? <CheckCircleIcon htmlColor={'green'} /> : null }
+            <Grid container justify="center" alignItems="center" item xs={5}>
+              {image ? <CheckCircleIcon htmlColor={'green'} /> : null}
             </Grid>
             <Grid item xs={12}>
-              <TextareaAutosize
+              <TextareaField
                 cols={45}
                 rows={10}
-                className={classes.textarea}
-                placeholder="Описание"
-                id={'description'}
-                onChange={handleOnChangeTextarea}
-                onBlur={runControlValidation('description')}
+                label={'description'}
+                name={'description'}
+                handleChange={handleOnChangeTextarea}
+                formState={formState}
+                runControlValidation={runControlValidation}
               />
-              {formState.errors && formState.errors['description'] ? (
-                <p className={classes.error}>
-                  {formState.errors['description']}
-                </p>
-              ) : null}
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            disabled={formIsInvalid()}
-          >
-            Добави
-          </Button>
+          <SubmitButton disabled={formIsInvalid()} title={'Добави'} />
         </form>
       </div>
     </Container>

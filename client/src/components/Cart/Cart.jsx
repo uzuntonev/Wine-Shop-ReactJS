@@ -2,7 +2,6 @@ import React, { useContext, useCallback } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
   Table,
-  Button,
   TableBody,
   TableCell,
   TableContainer,
@@ -11,9 +10,10 @@ import {
   Paper,
 } from '@material-ui/core';
 import { CloudinaryContext } from 'cloudinary-react';
-import { StoreContext } from '../Store/Store';
+import { StoreContext } from '../../Store/Store';
+import { resetCartSuccess } from '../../Store/actions';
 import SingleRowProduct from './SingleRowProduct';
-import { resetCartSuccess } from '../Store/actions';
+import SubmitButton from '../SubmitButton/SubmitButton';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -36,20 +36,20 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     width: '80vw',
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
 }));
 
 const Cart = () => {
   const classes = useStyles();
   const { state, dispatch } = useContext(StoreContext);
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    dispatch(resetCartSuccess());
-    console.log(state.cart);
-  }, []);
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(resetCartSuccess());
+      console.log(state.cart);
+    },
+    [dispatch, state.cart]
+  );
 
   const renderProducts = state.cart.map((product) => {
     return <SingleRowProduct key={product._id} product={product} />;
@@ -79,16 +79,10 @@ const Cart = () => {
               )}
             </TableBody>
           </Table>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
+          <SubmitButton
             disabled={!renderProducts.length}
-          >
-            Приключи поръчката
-          </Button>
+            title={'Приключи поръчката'}
+          />
         </form>
       </TableContainer>
     </CloudinaryContext>

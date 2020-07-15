@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Image } from 'cloudinary-react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardContent } from '@material-ui/core';
-import NavLink from '../NavLink/NavLink';
+import NavLink from '../../NavLink/NavLink';
 import ProductCardActions from './ProductCardActions';
 const useStyles = makeStyles((theme) => {
   return {

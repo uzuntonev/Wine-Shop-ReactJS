@@ -2,24 +2,19 @@ import React, { useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import {
-  Select,
-  TextField,
   CssBaseline,
-  Button,
   Avatar,
   Grid,
   Typography,
-  MenuItem,
-  InputLabel,
-  FormControl,
   Container,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import withForm from '../hocs/withForm';
-import { StoreContext } from '../Store/Store';
-import { register } from '../Store/actions';
-import InputField from '../InputField/InputField';
+import withForm from '../../../hocs/withForm';
+import { StoreContext } from '../../../Store/Store';
+import { register } from '../../../Store/actions';
+import InputField from '../InputField';
+import SubmitButton from '../../SubmitButton/SubmitButton';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: theme.spacing(3),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
 }));
 
 const Register = ({
@@ -54,21 +46,23 @@ const Register = ({
   history,
 }) => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(StoreContext);
+  const { dispatch } = useContext(StoreContext);
 
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangePassword = changeHandlerFactory('password');
   const handleOnChangeEmail = changeHandlerFactory('email');
   const handleOnChangeRePassword = changeHandlerFactory('rePassword');
-  const handleOnChangeUserType = changeHandlerFactory('userType');
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    runValidations().then((formData) => {
-      dispatch(register(formData));
-      history.push('/');
-    });
-  });
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      runValidations().then((formData) => {
+        dispatch(register(formData));
+        history.push('/');
+      });
+    },
+    [history, dispatch, runValidations]
+  );
 
   return (
     <Container component="main" maxWidth="xs">
@@ -78,7 +72,7 @@ const Register = ({
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Регистрация
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
@@ -121,20 +115,11 @@ const Register = ({
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            disabled={formIsInvalid()}
-          >
-            Регистрация
-          </Button>
+          <SubmitButton disabled={formIsInvalid()} title={'Регистрация'} />
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/login" variant="body2">
-                Already have an account? Sign in
+                Имате ли вече регистрация? Влез
               </Link>
             </Grid>
           </Grid>
