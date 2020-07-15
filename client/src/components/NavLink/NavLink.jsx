@@ -15,10 +15,10 @@ const NavLink = ({ to, icon, title, handler, children }) => {
 };
 
 NavLink.propTypes = {
-  to: PropTypes.string,
+  to: PropTypes.string.isRequired,
   icon: PropTypes.string,
   title: PropTypes.string,
-  handler: PropTypes.oneOfType([PropTypes.func, undefined]),
+  handler: PropTypes.func,
   children: PropTypes.node
 }
 
