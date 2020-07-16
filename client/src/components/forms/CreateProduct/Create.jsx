@@ -189,7 +189,7 @@ const Create = ({
               <TextareaField
                 cols={45}
                 rows={10}
-                label={'description'}
+                label={'Описание'}
                 name={'description'}
                 handleChange={handleOnChangeTextarea}
                 formState={formState}

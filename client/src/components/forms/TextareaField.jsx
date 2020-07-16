@@ -22,7 +22,7 @@ const TextareaField = ({
   name,
   handleChange,
   runControlValidation,
-  formState
+  formState,
 }) => {
   const classes = useStyles();
   return (
@@ -35,6 +35,7 @@ const TextareaField = ({
         id={name}
         onChange={handleChange}
         onBlur={runControlValidation(name)}
+        value={formState.form[name]}
       />
       {formState.errors && formState.errors[name] ? (
         <p className={classes.error}>{formState.errors[name]}</p>
@@ -51,6 +52,6 @@ TextareaField.propTypes = {
   handleChange: PropTypes.func,
   runControlValidation: PropTypes.func,
   formState: PropTypes.object,
-}
+};
 
 export default TextareaField;
