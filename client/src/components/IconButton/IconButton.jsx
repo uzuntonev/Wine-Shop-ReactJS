@@ -10,6 +10,7 @@ import {
   Remove,
   Add,
   PhotoCamera,
+  Close
 } from '@material-ui/icons';
 
 const IconButton = ({ handler, icon, attr, children }) => {
@@ -22,6 +23,7 @@ const IconButton = ({ handler, icon, attr, children }) => {
     remove: <Remove />,
     add: <Add />,
     camera: <PhotoCamera />,
+    close: <Close />
   };
   const handleIcon = useMemo(() => mapIcon[icon], [icon]);
   return (

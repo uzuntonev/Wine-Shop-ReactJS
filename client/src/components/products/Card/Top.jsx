@@ -38,6 +38,9 @@ const Top = ({ product }) => {
             publicId={product.imageUrl}
             fetch-format="auto"
             quality="auto"
+            height="300"
+            width="150"
+            loading="lazy"
           />
         </CardActionArea>
       </NavLink>
@@ -46,7 +49,7 @@ const Top = ({ product }) => {
 };
 
 Top.propTypes = {
-    product: PropTypes.object,
-  };
+  product: PropTypes.object,
+};
 
 export default Top;

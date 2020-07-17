@@ -51,7 +51,10 @@ const Cart = () => {
     [dispatch, state.cart]
   );
 
-  const renderProducts = state.cart.map((product) => {
+  // const renderProducts = state.cart.map((product) => {
+  //   return <TableRow key={product._id} product={product} />;
+  // });
+  const renderProducts = JSON.parse(window.localStorage.getItem('cart')).map((product) => {
     return <TableRow key={product._id} product={product} />;
   });
 

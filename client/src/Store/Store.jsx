@@ -30,7 +30,7 @@ const initialState = {
   images: [],
   error: null,
   toast: { status: '', message: '' },
-  cart: [],
+  cart: JSON.parse(window.localStorage.getItem('cart')),
 };
 
 const actionMap = {
@@ -111,6 +111,9 @@ const actionMap = {
     } else {
       products = products.concat({ ...product, quantity: 1 });
     }
+
+    window.localStorage.setItem('cart', JSON.stringify(products));
+
     return {
       ...state,
       cart: products,
@@ -135,6 +138,9 @@ const actionMap = {
       ...currentProduct,
       quantity: value,
     };
+
+    window.localStorage.setItem('cart', JSON.stringify(products));
+    
     return { ...state, cart: products, toast: { status: '', message: '' } };
   },
   [ActionTypes.updateQuantityFailure]: (state, { error }) => ({
@@ -148,6 +154,7 @@ const actionMap = {
   }),
   [ActionTypes.removeItemFromCartSuccess]: (state, { product }) => {
     const products = state.cart.filter((p) => p._id !== product._id);
+    window.localStorage.setItem('cart', JSON.stringify(products));
     return { ...state, cart: products };
   },
   [ActionTypes.removeItemFromCartFailure]: (state, { error }) => ({
@@ -160,6 +167,8 @@ const actionMap = {
     toast: { status: '', message: '' },
   }),
   [ActionTypes.resetCartSuccess]: (state) => {
+    window.localStorage.setItem('cart', JSON.stringify([]));
+
     return { ...state, cart: [] };
   },
   [ActionTypes.resetCartFailure]: (state, { error }) => ({
