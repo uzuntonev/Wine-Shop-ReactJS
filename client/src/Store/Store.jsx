@@ -180,23 +180,23 @@ const actionMap = {
     ...state,
     error,
   }),
-  [ActionTypes.getProducts]: (state, { products }) => ({
+  [ActionTypes.getProducts]: (state) => ({
     ...state,
     error: null,
     toast: { status: '', message: '' },
   }),
   [ActionTypes.getProductsSuccess]: (state, { products }) => ({
-    ...state,
-    products,
-    error: null,
-    toast: { status: '', message: '' },
-  }),
+      ...state,
+      products,
+      error: null,
+      toast: { status: '', message: '' },
+    }),
   [ActionTypes.getProductsFailure]: (state, { error }) => ({
     ...state,
     error,
     toast: { status: 'error', message: 'Something wrong' },
   }),
-  [ActionTypes.getUserProducts]: (state, { products }) => ({
+  [ActionTypes.getUserProducts]: (state) => ({
     ...state,
     error: null,
     toast: { status: '', message: '' },
@@ -264,13 +264,12 @@ const asyncActionMap = {
       .catch((error) => addToCartFailure(error));
   },
   [ActionTypes.getProducts]:() => {
-    return  productService.getProducts().then(({ data }) => {
+    return  productService.getAllProducts().then(({ data }) => {
      return getProductsSuccess(data)
     }).catch((error) => getProductsFailure(error))
   },
   [ActionTypes.getUserProducts]:() => {
     return productService.getUserProducts().then(({ data }) => {
-   
      return getUserProductsSuccess(data)
     }).catch((error) => getUserProductsFailure(error))
   }

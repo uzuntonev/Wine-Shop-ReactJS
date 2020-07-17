@@ -19,6 +19,10 @@ export const ActionTypes = {
   getProductsSuccess: Symbol('[PRODUCTS] Get All Products Success'),
   getProductsFailure: Symbol('[PRODUCTS] Get All Products Failure'),
 
+  getUserProducts: Symbol('[PRODUCTS] Get All Products'),
+  getUserProductsSuccess: Symbol('[PRODUCTS] Get All Products Success'),
+  getUserProductsFailure: Symbol('[PRODUCTS] Get All Products Failure'),
+
   addToCart: Symbol('[PRODUCTS] Add to card'),
   addToCartSuccess: Symbol('[PRODUCTS] Add to card Success'),
   addToCartFailure: Symbol('[PRODUCTS] Add to card Failure'),
@@ -52,12 +56,12 @@ export const createProduct = (product) => ({ type: ActionTypes.CreateProduct, pa
 export const createProductSuccess = () => ({ type: ActionTypes.CreateProductSuccess, payload: undefined});
 export const createProductFailure = (error) => ({ type: ActionTypes.CreateProductFailure, payload: { error }});
 
-export const getProducts = (products) => ({ type: ActionTypes.getProducts, payload: { products } });
+export const getProducts = () => ({ type: ActionTypes.getProducts, payload: undefined });
 export const getProductsSuccess = (products) => ({ type: ActionTypes.getProductsSuccess, payload: { products }});
 export const getProductsFailure = (error) => ({ type: ActionTypes.getProductsFailure, payload: { error }});
 
-export const getUserProducts = () => ({ type: ActionTypes.getUserProducts, payload: {  } });
-export const getUserProductsSuccess = () => ({ type: ActionTypes.getUserProductsSuccess, payload: {  }});
+export const getUserProducts = () => ({ type: ActionTypes.getUserProducts, payload: undefined });
+export const getUserProductsSuccess = (products) => ({ type: ActionTypes.getUserProductsSuccess, payload: { products }});
 export const getUserProductsFailure = (error) => ({ type: ActionTypes.getUserProductsFailure, payload: { error }});
 
 export const addToCart = (product) => ({ type: ActionTypes.addToCart, payload: { product } });
