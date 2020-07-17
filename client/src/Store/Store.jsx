@@ -30,7 +30,11 @@ const initialState = {
   images: [],
   error: null,
   toast: { status: '', message: '' },
+<<<<<<< Updated upstream
   cart: [],
+=======
+  cart: JSON.parse(window.localStorage.getItem('cart')) || []
+>>>>>>> Stashed changes
 };
 
 const actionMap = {

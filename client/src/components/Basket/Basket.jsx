@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
 const Basket = (props) => {
   const classes = useStyles();
   const { state } = useContext(StoreContext);
-
-  const basket = state.cart.reduce(
+  const cart = JSON.parse(window.localStorage.getItem('cart'));
+  const basket = (cart || []).reduce(
     (acc, curr) => {
       const count = acc.count + curr.quantity;
       const price = acc.price + curr.price * curr.quantity;

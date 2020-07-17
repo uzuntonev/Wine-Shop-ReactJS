@@ -1,6 +1,7 @@
 import React, { useContext, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
+<<<<<<< Updated upstream
 import {
   Avatar,
   CssBaseline,
@@ -10,17 +11,26 @@ import {
   IconButton,
 } from '@material-ui/core/';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+=======
+import { Avatar, CssBaseline, Typography, Container } from '@material-ui/core/';
+>>>>>>> Stashed changes
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import withForm from '../../../hocs/withForm';
 import { openUploadWidget } from '../../../services/cloudinary-service';
+<<<<<<< Updated upstream
 import { StoreContext } from '../../../Store/Store';
 import { createProduct } from '../../../Store/actions';
 import InputField from '../InputField';
 import TextareaField from '../TextareaField';
 import SubmitButton from '../../SubmitButton/SubmitButton';
 
+=======
+import { StoreContext } from '../../../store/Store';
+import { createProduct } from '../../../store/actions';
+import SubmitButton from '../../SubmitButton/SubmitButton';
+import LayoutFieldsProduct from '../LayoutFieldsProduct';
+>>>>>>> Stashed changes
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,18 +60,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Create = ({
-  changeHandlerFactory,
-  formState,
-  runValidations,
-  runControlValidation,
-  formIsInvalid,
-  history,
-}) => {
+const Create = (props) => {
+  const { runValidations, formIsInvalid, history } = props;
   const classes = useStyles();
   const [image, setImage] = useState();
   const { dispatch } = useContext(StoreContext);
 
+<<<<<<< Updated upstream
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangeYear = changeHandlerFactory('year');
   const handleOnChangeType = changeHandlerFactory('type');
@@ -78,42 +83,32 @@ const Create = ({
         imageUrl: image,
         creatorId: window.localStorage.getItem('user').id,
       };
+=======
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      runValidations().then((formData) => {
+        const product = {
+          ...formData,
+          imageUrl: image,
+          creatorId: window.localStorage.getItem('user').id,
+        };
+>>>>>>> Stashed changes
 
       dispatch(createProduct(product));
       history.push('/');
     });
   }, [history, dispatch, runValidations, image]);
 
-  const beginUpload = (tag) => {
-    const uploadOptions = {
-      cloudName: 'dfyamkucg',
-      tags: [tag, 'anImage'],
-      uploadPreset: 'upload',
-    };
-    openUploadWidget(uploadOptions, (error, photos) => {
-      if (!error) {
-        // console.log(photos);
-        if (photos.event === 'success') {
-          // setImages([...images, photos.info.public_id]);
-          setImage(photos.info.public_id);
-        }
-      } else {
-        // console.log(error);
-      }
-    });
-  };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <Typography component="div" className={classes.paper}>
         <Typography component="h1" variant="h5">
           Добави нов продукт
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
+<<<<<<< Updated upstream
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <InputField
@@ -197,9 +192,12 @@ const Create = ({
               />
             </Grid>
           </Grid>
+=======
+          <LayoutFieldsProduct {...props} image={image} setImage={setImage} />
+>>>>>>> Stashed changes
           <SubmitButton disabled={formIsInvalid()} title={'Добави'} />
         </form>
-      </div>
+      </Typography>
     </Container>
   );
 };
