@@ -1,83 +1,49 @@
 import React, { useContext, useState, useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
-import {
-  Avatar,
-  CssBaseline,
-  Grid,
-  Typography,
-  Container,
-  IconButton,
-} from '@material-ui/core/';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import withForm from '../../../hocs/withForm';
-import { openUploadWidget } from '../../../services/cloudinary-service';
+import {
+  CssBaseline,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from '@material-ui/core/';
+
 import { StoreContext } from '../../../store/Store';
-import { createProduct } from '../../../store/actions';
-import InputField from '../InputField';
-import TextareaField from '../TextareaField';
+import withForm from '../../../hocs/withForm';
 import SubmitButton from '../../SubmitButton/SubmitButton';
-import CloseIcon from '@material-ui/icons/Close';
-
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
-import productService from '../../../services/product-service';
-import { useLocation, useRouteMatch } from 'react-router-dom';
+import IconButton from '../../IconButton/IconButton';
+import LayoutFieldsProduct from '../LayoutFieldsProduct';
 
 const useStyles = makeStyles((theme) => ({
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.text,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  link: {
-    pointerEvents: 'fill',
   },
   closeIcon: {
     float: 'right',
   },
 }));
-const EditDialog = ({
-  handleClose,
-  open,
-  changeHandlerFactory,
-  formState,
-  runValidations,
-  runControlValidation,
-  formIsInvalid,
-  history,
-  product,
-}) => {
+const EditDialog = (props) => {
   const classes = useStyles();
+  const {
+    handleClose,
+    open,
+    formState,
+    runValidations,
+    formIsInvalid,
+    product,
+  } = props;
   const [image, setImage] = useState();
+  const history = useHistory();
   const { dispatch } = useContext(StoreContext);
 
-  const handleOnChangeName = changeHandlerFactory('name');
-  const handleOnChangeYear = changeHandlerFactory('year');
-  const handleOnChangeType = changeHandlerFactory('type');
-  const handleOnChangeAlcohol = changeHandlerFactory('alcohol');
-  const handleOnChangeSize = changeHandlerFactory('size');
-  const handleOnChangePrice = changeHandlerFactory('price');
-  const handleOnChangeDescription = changeHandlerFactory('description');
-
   useEffect(() => {
-    Object.assign(formState.form, {...formState.form, ...product});
-  }, [])
+    Object.assign(formState.form, { ...formState.form, ...product });
+  }, []);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -86,147 +52,38 @@ const EditDialog = ({
         const product = {
           ...formData,
           imageUrl: image,
-          creatorId: window.localStorage.getItem('user').id,
         };
 
-        // dispatch(createProduct(product));
+        console.log(product);
         history.push('/my-products');
+        handleClose()
       });
     },
     [history, dispatch, runValidations, image]
   );
 
-  const beginUpload = (tag) => {
-    const uploadOptions = {
-      cloudName: 'dfyamkucg',
-      tags: [tag, 'anImage'],
-      uploadPreset: 'upload',
-    };
-    openUploadWidget(uploadOptions, (error, photos) => {
-      if (!error) {
-        // console.log(photos);
-        if (photos.event === 'success') {
-          // setImages([...images, photos.info.public_id]);
-          setImage(photos.info.public_id);
-        }
-      } else {
-        // console.log(error);
-      }
-    });
-  };
-
   return (
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <form className={classes.form} onSubmit={handleSubmit}>
-          <DialogTitle id="form-dialog-title">
-            Редактиране продукт
-            <IconButton className={classes.closeIcon} onClick={handleClose}>
-              <CloseIcon />
-            </IconButton>
-          </DialogTitle>
-          <DialogContent>
-            <Container component="main" maxWidth="xs">
-              <CssBaseline />
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <InputField
-                    label={'Наименование'}
-                    name={'name'}
-                    changeHandler={handleOnChangeName}
-                    runControlValidation={runControlValidation}
-                    formState={formState}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <InputField
-                    label={'Реколта'}
-                    name={'year'}
-                    changeHandler={handleOnChangeYear}
-                    runControlValidation={runControlValidation}
-                    formState={formState}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <InputField
-                    label={'Вид'}
-                    name={'type'}
-                    changeHandler={handleOnChangeType}
-                    runControlValidation={runControlValidation}
-                    formState={formState}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <InputField
-                    label={'Размер'}
-                    name={'size'}
-                    changeHandler={handleOnChangeSize}
-                    runControlValidation={runControlValidation}
-                    formState={formState}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <InputField
-                    label={'Алкохол'}
-                    name={'alcohol'}
-                    changeHandler={handleOnChangeAlcohol}
-                    runControlValidation={runControlValidation}
-                    formState={formState}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <InputField
-                    label={'Цена'}
-                    name={'price'}
-                    changeHandler={handleOnChangePrice}
-                    runControlValidation={runControlValidation}
-                    formState={formState}
-                  />
-                </Grid>
-                <Grid item xs={7}>
-                  <label htmlFor="icon-button-file">
-                    Прикачи снимка
-                    <IconButton
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                      onClick={() => beginUpload('image')}
-                    >
-                      <PhotoCamera />
-                    </IconButton>
-                  </label>
-                </Grid>
-                <Grid
-                  container
-                  justify="center"
-                  alignItems="center"
-                  item
-                  xs={5}
-                >
-                  {image ? <CheckCircleIcon htmlColor={'green'} /> : null}
-                </Grid>
-                <Grid item xs={12}>
-                  <TextareaField
-                    cols={45}
-                    rows={10}
-                    label={'Описание'}
-                    name={'description'}
-                    handleChange={handleOnChangeDescription}
-                    formState={formState}
-                    runControlValidation={runControlValidation}
-                  />
-                </Grid>
-              </Grid>
-            </Container>
-          </DialogContent>
-          <DialogActions>
-            <SubmitButton disabled={formIsInvalid()} title={'Редактиране'} />
-          </DialogActions>
-        </form>
-      </Dialog>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="form-dialog-title"
+    >
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <DialogTitle id="form-dialog-title">
+          Редактиране продукт
+          <Typography component="div" className={classes.closeIcon}>
+            <IconButton handler={handleClose} icon={'close'} />
+          </Typography>
+        </DialogTitle>
+        <DialogContent>
+          <CssBaseline />
+          <LayoutFieldsProduct {...props} image={image} setImage={setImage} />
+        </DialogContent>
+        <DialogActions>
+          <SubmitButton disabled={formIsInvalid()} title={'Редактиране'} />
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 };
 

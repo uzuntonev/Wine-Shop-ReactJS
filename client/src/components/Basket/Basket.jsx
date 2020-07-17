@@ -7,7 +7,8 @@ import NavLink from '../NavLink/NavLink';
 const Basket = (props) => {
   const { state } = useContext(StoreContext);
 
-  const basket = JSON.parse(window.localStorage.getItem('cart')).reduce(
+  const cart = JSON.parse(window.localStorage.getItem('cart'));
+  const basket = (cart || []).reduce(
     (acc, curr) => {
       const count = acc.count + curr.quantity;
       const price = acc.price + curr.price * curr.quantity;

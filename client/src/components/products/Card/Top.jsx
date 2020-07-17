@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Image } from 'cloudinary-react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardActionArea, CardContent } from '@material-ui/core';
+import { Card, CardActionArea } from '@material-ui/core';
 import NavLink from '../../NavLink/NavLink';
 
 const useStyles = makeStyles((theme) => {

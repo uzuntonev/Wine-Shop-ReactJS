@@ -1,24 +1,14 @@
 import React, { useContext, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
-import {
-  Avatar,
-  CssBaseline,
-  Grid,
-  Typography,
-  Container,
-} from '@material-ui/core/';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Typography, Container, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import withForm from '../../../hocs/withForm';
-import { openUploadWidget } from '../../../services/cloudinary-service';
 import { StoreContext } from '../../../store/Store';
 import { createProduct } from '../../../store/actions';
-import InputField from '../InputField';
-import TextareaField from '../TextareaField';
 import SubmitButton from '../../SubmitButton/SubmitButton';
-import IconButton from '../../IconButton/IconButton';
+import LayoutFieldsProduct from '../LayoutFieldsProduct';
+import withForm from '../../../hocs/withForm';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -31,41 +21,17 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px',
     boxShadow: `3px 3px 5px ${theme.palette.primary.text}`,
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.text,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  link: {
-    pointerEvents: 'fill',
-  },
 }));
 
-const Create = ({
-  changeHandlerFactory,
-  formState,
-  runValidations,
-  runControlValidation,
-  formIsInvalid,
-  history,
-}) => {
+const Create = (props) => {
+  const { runValidations, formIsInvalid, history } = props;
   const classes = useStyles();
   const [image, setImage] = useState();
   const { dispatch } = useContext(StoreContext);
-
-  const handleOnChangeName = changeHandlerFactory('name');
-  const handleOnChangeYear = changeHandlerFactory('year');
-  const handleOnChangeType = changeHandlerFactory('type');
-  const handleOnChangeAlcohol = changeHandlerFactory('alcohol');
-  const handleOnChangeSize = changeHandlerFactory('size');
-  const handleOnChangePrice = changeHandlerFactory('price');
-  const handleOnChangeTextarea = changeHandlerFactory('description');
 
   const handleSubmit = useCallback(
     (e) => {
@@ -84,123 +50,18 @@ const Create = ({
     [history, dispatch, runValidations, image]
   );
 
-  const beginUpload = (tag) => {
-    const uploadOptions = {
-      cloudName: 'dfyamkucg',
-      tags: [tag, 'anImage'],
-      uploadPreset: 'upload',
-    };
-    openUploadWidget(uploadOptions, (error, photos) => {
-      if (!error) {
-        // console.log(photos);
-        if (photos.event === 'success') {
-          // setImages([...images, photos.info.public_id]);
-          setImage(photos.info.public_id);
-        }
-      } else {
-        // console.log(error);
-      }
-    });
-  };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <Typography component="div" className={classes.paper}>
         <Typography component="h1" variant="h5">
           Добави нов продукт
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <InputField
-                label={'Наименование'}
-                name={'name'}
-                changeHandler={handleOnChangeName}
-                runControlValidation={runControlValidation}
-                formState={formState}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <InputField
-                label={'Реколта'}
-                name={'year'}
-                changeHandler={handleOnChangeYear}
-                runControlValidation={runControlValidation}
-                formState={formState}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <InputField
-                label={'Вид'}
-                name={'type'}
-                changeHandler={handleOnChangeType}
-                runControlValidation={runControlValidation}
-                formState={formState}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <InputField
-                label={'Размер'}
-                name={'size'}
-                changeHandler={handleOnChangeSize}
-                runControlValidation={runControlValidation}
-                formState={formState}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <InputField
-                label={'Алкохол'}
-                name={'alcohol'}
-                changeHandler={handleOnChangeAlcohol}
-                runControlValidation={runControlValidation}
-                formState={formState}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <InputField
-                label={'Цена'}
-                name={'price'}
-                changeHandler={handleOnChangePrice}
-                runControlValidation={runControlValidation}
-                formState={formState}
-              />
-            </Grid>
-            <Grid item xs={7}>
-              <label htmlFor="icon-button-file">
-                Прикачи снимка
-                <IconButton
-                  attr={{
-                    color: 'primary',
-                    'aria-label': 'upload picture',
-                    component: 'span',
-                  }}
-                  handler={() => beginUpload('image')}
-                  icon="camera"
-                />
-              </label>
-            </Grid>
-            <Grid container justify="center" alignItems="center" item xs={5}>
-              {image ? <CheckCircleIcon htmlColor={'green'} /> : null}
-            </Grid>
-            <Grid item xs={12}>
-              <TextareaField
-                cols={45}
-                rows={10}
-                label={'Описание'}
-                name={'description'}
-                handleChange={handleOnChangeTextarea}
-                formState={formState}
-                runControlValidation={runControlValidation}
-              />
-            </Grid>
-          </Grid>
+          <LayoutFieldsProduct {...props} image={image} setImage={setImage} />
           <SubmitButton disabled={formIsInvalid()} title={'Добави'} />
         </form>
-      </div>
+      </Typography>
     </Container>
   );
 };

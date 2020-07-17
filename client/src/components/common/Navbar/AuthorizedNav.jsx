@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
-import {  makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import { logout } from '../../../store/actions';
 import { StoreContext } from '../../../store/Store';
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const AuthorizedNav = ({ history }) => {
-  const classes = useStyles()
+  const classes = useStyles();
   const { dispatch } = useContext(StoreContext);
 
   const handlerLogout = () => {
@@ -81,27 +81,13 @@ const AuthorizedNav = ({ history }) => {
             handler={handlerLogout}
           />
         </Grid>
-
-        {/* <div color="inherit" className={classes.search}>
-          <div color="inherit" className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </div> */}
       </Grid>
     </Fragment>
   );
 };
 
 AuthorizedNav.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default AuthorizedNav;

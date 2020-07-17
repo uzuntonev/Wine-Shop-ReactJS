@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Image, Transformation } from 'cloudinary-react';
-import { TableCell, TableRow as TableRowMaterial} from '@material-ui/core';
+import { TableCell, TableRow as TableRowMaterial, Typography} from '@material-ui/core';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Quantity from './Quantity';
 import IconButton from '../IconButton/IconButton';
@@ -56,12 +56,12 @@ const TableRow = ({ product }) => {
   return (
     <StyledTableRow>
       <StyledTableCell align="center" component="th" scope="row">
-        <div className={classes.imageCol}>
+        <Typography component='div' className={classes.imageCol}>
           <IconButton handler={() => removeItemFromCart(product)} icon='close' />
           <Image publicId={product.imageUrl} fetch-format="auto" quality="auto">
             <Transformation height="200" width="150" crop="scale" radius="20" />
           </Image>
-        </div>
+        </Typography>
       </StyledTableCell>
       <StyledTableCell align="right">{product.name}</StyledTableCell>
       <StyledTableCell align="right">
