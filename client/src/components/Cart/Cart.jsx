@@ -6,13 +6,13 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
+  TableRow as TableRowMaterial,
   Paper,
 } from '@material-ui/core';
 import { CloudinaryContext } from 'cloudinary-react';
-import { StoreContext } from '../../Store/Store';
-import { resetCartSuccess } from '../../Store/actions';
-import SingleRowProduct from './SingleRowProduct';
+import { StoreContext } from '../../store/Store';
+import { resetCartSuccess } from '../../store/actions';
+import TableRow from './TableRow';
 import SubmitButton from '../SubmitButton/SubmitButton';
 
 const StyledTableCell = withStyles((theme) => ({
@@ -51,8 +51,9 @@ const Cart = () => {
     [dispatch, state.cart]
   );
 
-  const renderProducts = state.cart.map((product) => {
-    return <SingleRowProduct key={product._id} product={product} />;
+  const cart = JSON.parse(window.localStorage.getItem('cart'));
+  const renderProducts = (cart || []).map((product) => {
+    return <TableRow key={product._id} product={product} />;
   });
 
   return (
@@ -61,13 +62,13 @@ const Cart = () => {
         <form onSubmit={handleSubmit}>
           <Table className={classes.table} aria-label="customized table">
             <TableHead>
-              <TableRow>
+              <TableRowMaterial>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell align="right">Продукт</StyledTableCell>
                 <StyledTableCell align="right">Цена</StyledTableCell>
                 <StyledTableCell align="right">Количество</StyledTableCell>
                 <StyledTableCell align="right">Общо</StyledTableCell>
-              </TableRow>
+              </TableRowMaterial>
             </TableHead>
             <TableBody>
               {renderProducts.length ? (

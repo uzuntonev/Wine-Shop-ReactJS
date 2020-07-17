@@ -1,10 +1,31 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Basket from '../../Basket/Basket';
 import NavLink from '../../NavLink/NavLink';
-
-const UnauthorizedNav = ({ classes }) => {
+const useStyles = makeStyles((theme) => ({
+  navLink: {
+    '& a': {
+      color: theme.palette.primary.text,
+      padding: '10px',
+      fontWeight: 'bold',
+      borderRadius: '20px',
+      textDecoration: 'none',
+      display: 'flex',
+      alignContent: 'center',
+      alignItems: 'center',
+      '&:hover': {
+        backgroundColor: theme.palette.primary.text,
+        color: theme.palette.primary.main,
+      },
+      '& span.material-icons': {
+        marginRight: '10px',
+      },
+    },
+  },
+}));
+const UnauthorizedNav = () => {
+  const classes = useStyles();
   return (
     <Fragment>
       <Grid
@@ -54,8 +75,5 @@ const UnauthorizedNav = ({ classes }) => {
   );
 };
 
-UnauthorizedNav.propTypes = {
-  classes: PropTypes.object
-};
 
 export default UnauthorizedNav;

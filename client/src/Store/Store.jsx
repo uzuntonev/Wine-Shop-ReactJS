@@ -11,6 +11,10 @@ import {
   registerFailure,
   addToCartSuccess,
   addToCartFailure,
+  getProductsSuccess,
+  getProductsFailure,
+  getUserProductsSuccess,
+  getUserProductsFailure
 } from './actions';
 import userService from '../services/user-service';
 import productService from '../services/product-service';
@@ -30,11 +34,8 @@ const initialState = {
   images: [],
   error: null,
   toast: { status: '', message: '' },
-<<<<<<< Updated upstream
-  cart: [],
-=======
   cart: JSON.parse(window.localStorage.getItem('cart')) || []
->>>>>>> Stashed changes
+
 };
 
 const actionMap = {
@@ -115,6 +116,9 @@ const actionMap = {
     } else {
       products = products.concat({ ...product, quantity: 1 });
     }
+
+    window.localStorage.setItem('cart', JSON.stringify(products));
+
     return {
       ...state,
       cart: products,
@@ -139,6 +143,9 @@ const actionMap = {
       ...currentProduct,
       quantity: value,
     };
+
+    window.localStorage.setItem('cart', JSON.stringify(products));
+    
     return { ...state, cart: products, toast: { status: '', message: '' } };
   },
   [ActionTypes.updateQuantityFailure]: (state, { error }) => ({
@@ -152,6 +159,7 @@ const actionMap = {
   }),
   [ActionTypes.removeItemFromCartSuccess]: (state, { product }) => {
     const products = state.cart.filter((p) => p._id !== product._id);
+    window.localStorage.setItem('cart', JSON.stringify(products));
     return { ...state, cart: products };
   },
   [ActionTypes.removeItemFromCartFailure]: (state, { error }) => ({
@@ -164,12 +172,46 @@ const actionMap = {
     toast: { status: '', message: '' },
   }),
   [ActionTypes.resetCartSuccess]: (state) => {
+    window.localStorage.setItem('cart', JSON.stringify([]));
+
     return { ...state, cart: [] };
   },
   [ActionTypes.resetCartFailure]: (state, { error }) => ({
     ...state,
     error,
   }),
+  [ActionTypes.getProducts]: (state, { products }) => ({
+    ...state,
+    error: null,
+    toast: { status: '', message: '' },
+  }),
+  [ActionTypes.getProductsSuccess]: (state, { products }) => ({
+    ...state,
+    products,
+    error: null,
+    toast: { status: '', message: '' },
+  }),
+  [ActionTypes.getProductsFailure]: (state, { error }) => ({
+    ...state,
+    error,
+    toast: { status: 'error', message: 'Something wrong' },
+  }),
+  [ActionTypes.getUserProducts]: (state, { products }) => ({
+    ...state,
+    error: null,
+    toast: { status: '', message: '' },
+  }),
+  [ActionTypes.getUserProductsSuccess]: (state, { products }) => ({
+    ...state,
+    products,
+    error: null,
+    toast: { status: '', message: '' },
+  }),
+  [ActionTypes.getUserProductsFailure]: (state, { error }) => ({
+    ...state,
+    error,
+    toast: { status: 'error', message: 'Something wrong' },
+  })
 };
 
 const asyncActionMap = {
@@ -221,6 +263,17 @@ const asyncActionMap = {
       })
       .catch((error) => addToCartFailure(error));
   },
+  [ActionTypes.getProducts]:() => {
+    return  productService.getProducts().then(({ data }) => {
+     return getProductsSuccess(data)
+    }).catch((error) => getProductsFailure(error))
+  },
+  [ActionTypes.getUserProducts]:() => {
+    return productService.getUserProducts().then(({ data }) => {
+   
+     return getUserProductsSuccess(data)
+    }).catch((error) => getUserProductsFailure(error))
+  }
 };
 
 const storeReducer = (state, action) => {

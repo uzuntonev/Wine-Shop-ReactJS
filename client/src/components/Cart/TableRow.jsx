@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Image, Transformation } from 'cloudinary-react';
-import { TableCell, TableRow, IconButton } from '@material-ui/core';
+import { TableCell, TableRow as TableRowMaterial, Typography} from '@material-ui/core';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
-import InputQuantity from './InputQuantity';
-import { StoreContext } from '../../Store/Store';
-import { removeItemFromCartSuccess } from '../../Store/actions'
+import Quantity from './Quantity';
+import IconButton from '../IconButton/IconButton';
+import { StoreContext } from '../../store/Store';
+import { removeItemFromCartSuccess } from '../../store/actions'
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -24,7 +24,7 @@ const StyledTableRow = withStyles((theme) => ({
       backgroundColor: theme.palette.action.hover,
     },
   },
-}))(TableRow);
+}))(TableRowMaterial);
 const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 700,
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 20,
   },
 }));
-const SingleRowProduct = ({ product }) => {
+const TableRow = ({ product }) => {
   const classes = useStyles();
   const { dispatch } = useContext(StoreContext);
   const removeItemFromCart = (product) => {
@@ -56,21 +56,19 @@ const SingleRowProduct = ({ product }) => {
   return (
     <StyledTableRow>
       <StyledTableCell align="center" component="th" scope="row">
-        <div className={classes.imageCol}>
-          <IconButton onClick={() => removeItemFromCart(product)}>
-            <CloseIcon />
-          </IconButton>
+        <Typography component='div' className={classes.imageCol}>
+          <IconButton handler={() => removeItemFromCart(product)} icon='close' />
           <Image publicId={product.imageUrl} fetch-format="auto" quality="auto">
             <Transformation height="200" width="150" crop="scale" radius="20" />
           </Image>
-        </div>
+        </Typography>
       </StyledTableCell>
       <StyledTableCell align="right">{product.name}</StyledTableCell>
       <StyledTableCell align="right">
         {product.price.toFixed(2)}лв
       </StyledTableCell>
       <StyledTableCell align="right">
-        <InputQuantity product={product} />
+        <Quantity product={product} />
       </StyledTableCell>
       <StyledTableCell align="right">
         {(product.quantity * product.price).toFixed(2)}лв
@@ -79,8 +77,8 @@ const SingleRowProduct = ({ product }) => {
   );
 };
 
-SingleRowProduct.propTypes = {
+TableRow.propTypes = {
   product: PropTypes.object
 }
 
-export default SingleRowProduct;
+export default TableRow;

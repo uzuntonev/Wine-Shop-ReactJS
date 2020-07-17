@@ -1,11 +1,9 @@
 import React, { Fragment, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
-import { updateQuantitySuccess } from '../../Store/actions';
-import {  makeStyles } from '@material-ui/core/styles';
-import { IconButton } from '@material-ui/core';
-import { StoreContext } from '../../Store/Store';
+import { makeStyles } from '@material-ui/core/styles';
+import { StoreContext } from '../../store/Store';
+import { updateQuantitySuccess } from '../../store/actions';
+import IconButton from '../IconButton/IconButton';
 const useStyles = makeStyles((theme) => ({
   input: {
     background: 'transparent',
@@ -13,13 +11,16 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 20,
   },
 }));
-const InputQuantity = ({ product }) => {
+const Quantity = ({ product }) => {
   const classes = useStyles();
   const { dispatch } = useContext(StoreContext);
 
-  const handleChange = useCallback((e, product) => {
-    dispatch(updateQuantitySuccess({ product, value: +e.target.value }));
-  }, [dispatch]);
+  const handleChange = useCallback(
+    (e, product) => {
+      dispatch(updateQuantitySuccess({ product, value: +e.target.value }));
+    },
+    [dispatch]
+  );
   const changeQuantity = (e, action, product) => {
     const element = document.getElementById(product._id);
     const mapAction = {
@@ -43,9 +44,10 @@ const InputQuantity = ({ product }) => {
 
   return (
     <Fragment>
-      <IconButton onClick={(e) => changeQuantity(e, 'decrease', product)}>
-        <RemoveIcon />
-      </IconButton>
+      <IconButton
+        handler={(e) => changeQuantity(e, 'decrease', product)}
+        icon="remove"
+      />
       <input
         className={classes.input}
         id={product._id}
@@ -53,15 +55,16 @@ const InputQuantity = ({ product }) => {
         value={product.quantity}
         onChange={(e) => handleChange(e, product)}
       />
-      <IconButton onClick={(e) => changeQuantity(e, 'increase', product)}>
-        <AddIcon />
-      </IconButton>
+      <IconButton
+        handler={(e) => changeQuantity(e, 'increase', product)}
+        icon="add"
+      />
     </Fragment>
   );
 };
 
-InputQuantity.propTypes = {
-  product: PropTypes.object
-}
+Quantity.propTypes = {
+  product: PropTypes.object,
+};
 
-export default InputQuantity;
+export default Quantity;

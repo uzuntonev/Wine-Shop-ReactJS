@@ -52,9 +52,13 @@ export const createProduct = (product) => ({ type: ActionTypes.CreateProduct, pa
 export const createProductSuccess = () => ({ type: ActionTypes.CreateProductSuccess, payload: undefined});
 export const createProductFailure = (error) => ({ type: ActionTypes.CreateProductFailure, payload: { error }});
 
-export const getProducts = (products) => ({ type: ActionTypes.CreateProduct, payload: { products } });
-export const getProductsSuccess = (products) => ({ type: ActionTypes.CreateProductSuccess, payload: { products }});
-export const getProductsFailure = (error) => ({ type: ActionTypes.CreateProductFailure, payload: { error }});
+export const getProducts = (products) => ({ type: ActionTypes.getProducts, payload: { products } });
+export const getProductsSuccess = (products) => ({ type: ActionTypes.getProductsSuccess, payload: { products }});
+export const getProductsFailure = (error) => ({ type: ActionTypes.getProductsFailure, payload: { error }});
+
+export const getUserProducts = () => ({ type: ActionTypes.getUserProducts, payload: {  } });
+export const getUserProductsSuccess = () => ({ type: ActionTypes.getUserProductsSuccess, payload: {  }});
+export const getUserProductsFailure = (error) => ({ type: ActionTypes.getUserProductsFailure, payload: { error }});
 
 export const addToCart = (product) => ({ type: ActionTypes.addToCart, payload: { product } });
 export const addToCartSuccess = (product) => ({ type: ActionTypes.addToCartSuccess, payload: { product }});
