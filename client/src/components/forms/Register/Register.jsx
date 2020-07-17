@@ -12,8 +12,8 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import withForm from '../../../hocs/withForm';
-import { StoreContext } from '../../../Store/Store';
-import { register } from '../../../Store/actions';
+import { StoreContext } from '../../../store/Store';
+import { register } from '../../../store/actions';
 import InputField from '../InputField';
 import SubmitButton from '../../SubmitButton/SubmitButton';
 

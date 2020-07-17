@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { StoreContext } from '../../../Store/Store';
+import { StoreContext } from '../../../store/Store';
 const Toast = () => {
   const { state } = useContext(StoreContext);
   useEffect(() => {

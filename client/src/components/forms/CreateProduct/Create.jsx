@@ -7,21 +7,18 @@ import {
   Grid,
   Typography,
   Container,
-  IconButton,
 } from '@material-ui/core/';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import withForm from '../../../hocs/withForm';
 import { openUploadWidget } from '../../../services/cloudinary-service';
-import { StoreContext } from '../../../Store/Store';
-import { createProduct } from '../../../Store/actions';
+import { StoreContext } from '../../../store/Store';
+import { createProduct } from '../../../store/actions';
 import InputField from '../InputField';
 import TextareaField from '../TextareaField';
 import SubmitButton from '../../SubmitButton/SubmitButton';
-
-
+import IconButton from '../../IconButton/IconButton';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -70,19 +67,22 @@ const Create = ({
   const handleOnChangePrice = changeHandlerFactory('price');
   const handleOnChangeTextarea = changeHandlerFactory('description');
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    runValidations().then((formData) => {
-      const product = {
-        ...formData,
-        imageUrl: image,
-        creatorId: window.localStorage.getItem('user').id,
-      };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      runValidations().then((formData) => {
+        const product = {
+          ...formData,
+          imageUrl: image,
+          creatorId: window.localStorage.getItem('user').id,
+        };
 
-      dispatch(createProduct(product));
-      history.push('/');
-    });
-  }, [history, dispatch, runValidations, image]);
+        dispatch(createProduct(product));
+        history.push('/');
+      });
+    },
+    [history, dispatch, runValidations, image]
+  );
 
   const beginUpload = (tag) => {
     const uploadOptions = {
@@ -173,13 +173,14 @@ const Create = ({
               <label htmlFor="icon-button-file">
                 Прикачи снимка
                 <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                  onClick={() => beginUpload('image')}
-                >
-                  <PhotoCamera />
-                </IconButton>
+                  attr={{
+                    color: 'primary',
+                    'aria-label': 'upload picture',
+                    component: 'span',
+                  }}
+                  handler={() => beginUpload('image')}
+                  icon="camera"
+                />
               </label>
             </Grid>
             <Grid container justify="center" alignItems="center" item xs={5}>
