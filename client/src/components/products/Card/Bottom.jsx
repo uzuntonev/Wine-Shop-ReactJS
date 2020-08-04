@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent } from '@material-ui/core';
-import { StoreContext } from '../../../store/Store';
+import { StoreContext } from '../../../store/store';
 import AuthorizedActions from './AuthorizedActions';
 import UnauthorizedActions from './UnauthorizedActions';
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import { logout } from '../../../store/actions';
-import { StoreContext } from '../../../store/Store';
+import { StoreContext } from '../../../store/store';
 import NavLink from '../../NavLink/NavLink';
 
 const useStyles = makeStyles((theme) => ({

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Badge from '@material-ui/core/Badge';
-import { StoreContext } from '../../store/Store';
+import { StoreContext } from '../../store/store';
 import IconButton from '../IconButton/IconButton';
 import NavLink from '../NavLink/NavLink';
 

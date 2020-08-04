@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { StoreContext } from '../../store/Store';
+import { StoreContext } from '../../store/store';
 import { updateQuantitySuccess } from '../../store/actions';
 import IconButton from '../IconButton/IconButton';
 const useStyles = makeStyles((theme) => ({

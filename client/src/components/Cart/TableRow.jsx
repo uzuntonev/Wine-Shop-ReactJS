@@ -5,7 +5,7 @@ import { TableCell, TableRow as TableRowMaterial, Typography} from '@material-ui
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Quantity from './Quantity';
 import IconButton from '../IconButton/IconButton';
-import { StoreContext } from '../../store/Store';
+import { StoreContext } from '../../store/store';
 import { removeItemFromCartSuccess } from '../../store/actions'
 
 const StyledTableCell = withStyles((theme) => ({

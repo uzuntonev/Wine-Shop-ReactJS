@@ -10,7 +10,7 @@ import {
   Paper,
 } from '@material-ui/core';
 import { CloudinaryContext } from 'cloudinary-react';
-import { StoreContext } from '../../store/Store';
+import { StoreContext } from '../../store/store';
 import { resetCartSuccess } from '../../store/actions';
 import TableRow from './TableRow';
 import SubmitButton from '../SubmitButton/SubmitButton';

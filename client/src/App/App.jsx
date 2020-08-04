@@ -4,7 +4,7 @@ import {
   createMuiTheme,
   ThemeProvider,
 } from '@material-ui/core/styles';
-import Context from '../store/Store';
+import Context from '../store/store';
 import Navbar from '../components/common/Navbar/Navbar';
 import Footer from '../components/common/Footer/Footer';
 import AppRouter from './AppRouter';

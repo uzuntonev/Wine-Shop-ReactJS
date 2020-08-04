@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Login from '../components/forms/Login/Login';
 import Register from '../components/forms/Register/Register';
 import Welcome from '../components/Welcome/Welcome';
-import { StoreContext } from '../store/Store';
+import { StoreContext } from '../store/store';
 const Details = React.lazy(() => import('../components/products/Details/Details'));
 const List = React.lazy(() => import('../components/products/List/List'));
 const Cart = React.lazy(() => import('../components/Cart/Cart'));

@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@material-ui/core/';
 
-import { StoreContext } from '../../../store/Store';
+import { StoreContext } from '../../../store/store';
 import withForm from '../../../hocs/withForm';
 import SubmitButton from '../../SubmitButton/SubmitButton';
 import IconButton from '../../IconButton/IconButton';

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import NavLink from '../../NavLink/NavLink';
 import IconButton from '../../IconButton/IconButton';
 import { addToCart } from '../../../store/actions';
-import { StoreContext } from '../../../store/Store';
+import { StoreContext } from '../../../store/store';
 
 const useStyles = makeStyles((theme) => {
   return {

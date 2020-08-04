@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { CloudinaryContext } from 'cloudinary-react';
-import { StoreContext } from '../../../store/Store';
+import { StoreContext } from '../../../store/store';
 import { getUserProducts, getProducts } from '../../../store/actions';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '../Card/Card';
