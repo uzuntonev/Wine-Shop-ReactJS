@@ -1,4 +1,6 @@
 const { ProductModel, UserModel } = require('../models');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
   getProducts: (req, res, next) => {
@@ -29,14 +31,14 @@ module.exports = {
     const newProduct = req.body;
     const { _id: userId } = req.user;
 
-    const { year, size, price, description, name, type } = req.body;
+    const { year, size, price, description, name, type, quantity } = req.body;
     if (isNaN(year) || isNaN(size) || isNaN(price)) {
       res
         .status(400)
-        .send({ msg: "field 'year', 'size', 'price' must be numbers " });
+        .send({ msg: "field 'year','quantity', 'size', 'price' must be numbers " });
         return;
     }
-    if (!description || !name || !price || !year || !size || !type) {
+    if (!description || !name || !price || !year || !size || !type || !quantity) {
       res
         .status(400)
         .send({ msg: "All field should be filled" });
@@ -84,4 +86,17 @@ module.exports = {
       })
       .catch(next);
   },
+  postCheckoutProduct: (req, res, next) => {
+    const { cart, client } = req.body;
+    const data = JSON.stringify({client, cart})
+      Promise.resolve(
+        cart.map(product => {
+          ProductModel.updateOne(
+            {_id: product._id}, 
+            {...product, quantity: product.quantity - product.productQuantityCart}
+            )
+      })).then(() => {
+        res.status(200).send({msg: 'Product quantity is update'})
+      }).catch(next)
+  }
 };

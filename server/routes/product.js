@@ -8,7 +8,8 @@ const {
   putProduct,
   delProduct,
   getSingleProduct,
-  getUserProduct
+  getUserProduct,
+  postCheckoutProduct
 } = require('../controllers/product');
 
 // @route GET api/products
@@ -34,5 +35,9 @@ router.put('/:id',auth(), putProduct);
 // @route DELETE api/products
 // @desc delete product
 router.delete('/:id',auth(), delProduct);
+
+// @route POST api/checkout
+// @desc update products in cart
+router.post('/checkout',auth(false), postCheckoutProduct);
 
 module.exports = router;
