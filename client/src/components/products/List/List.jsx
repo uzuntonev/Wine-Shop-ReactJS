@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '../Card/Card';
 import { Grid } from '@material-ui/core';
 import productService from '../../../services/product-service';
+import { useRouteMatch } from 'react-router-dom';
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => {
 });
 const List = () => {
   const classes = useStyles();
+  const match = useRouteMatch();
   const { state, dispatch } = useContext(StoreContext);
   const [products, setProducts] = useState([]);
 
@@ -32,7 +34,7 @@ const List = () => {
     } else {
       dispatch(getProducts());
     }
-  }, []);
+  }, [match.url]);
 
   const renderProducts = (products.length ? products : state.products).map((product) => {
     return (

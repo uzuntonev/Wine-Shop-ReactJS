@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppBar, Toolbar, Grid } from '@material-ui/core';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AuthorizedNav from './AuthorizedNav';
 import UnauthorizedNav from './UnauthorizedNav';
 import { StoreContext } from '../../../store/store';

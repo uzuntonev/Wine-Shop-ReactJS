@@ -4,7 +4,9 @@ import { CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '../../IconButton/IconButton';
 import EditDialog from '../../forms/EditProduct/EditDialog';
-
+import { useContext } from 'react';
+import { StoreContext } from '../../../store/store';
+import { deleteProduct } from '../../../store/actions';
 const useStyles = makeStyles((theme) => {
   return {
     actionButtons: {
@@ -16,19 +18,24 @@ const useStyles = makeStyles((theme) => {
 
 const AuthorizeActions = ({ product }) => {
   const classes = useStyles();
+  const { dispatch } = useContext(StoreContext);
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const handleClickOpen = useCallback(() => {
     history.push(`${history.location.pathname}/${product._id}`);
     setOpen(true);
-  }, [history]);
+  }, [history, product._id]);
 
   const handleClose = useCallback(() => {
     history.goBack();
     setOpen(false);
   }, [history]);
 
+  const handleDelete = useCallback(() => {
+    dispatch(deleteProduct(product._id));
+    history.push(`/my-products`);
+  }, [dispatch, product._id]);
   return (
     <Fragment>
       <CardActions className={classes.actionButtons}>
@@ -38,7 +45,7 @@ const AuthorizeActions = ({ product }) => {
           attr={{ size: 'small', color: 'inherit' }}
         />
         <IconButton
-          handler={() => console.log('delete action')}
+          handler={handleDelete}
           icon="delete"
           attr={{ size: 'small', color: 'inherit' }}
         />

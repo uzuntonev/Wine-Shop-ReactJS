@@ -3,21 +3,20 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import {
-  Avatar,
   CssBaseline,
-  FormControlLabel,
-  Checkbox,
+  Avatar,
   Grid,
   Typography,
   Container,
-} from '@material-ui/core/';
+} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import withForm from '../../../hocs/withForm';
 import { StoreContext } from '../../../store/store';
-import { login } from '../../../store/actions';
+import { register } from '../../../store/actions';
 import InputField from '../InputField';
 import SubmitButton from '../../SubmitButton/SubmitButton';
+import productService from '../../../services/product-service';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     border: `solid 1px ${theme.palette.primary.text}`,
-    padding: '30px',
+    padding: '20px',
     borderRadius: '20px',
     boxShadow: `3px 3px 5px ${theme.palette.primary.text}`,
   },
@@ -36,15 +35,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.text,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  link: {
-    pointerEvents: 'fill',
+    width: '100%',
+    marginTop: theme.spacing(3),
   },
 }));
 
-const Login = ({
+const Checkout = ({
   changeHandlerFactory,
   formState,
   runValidations,
@@ -53,34 +49,43 @@ const Login = ({
   history,
 }) => {
   const classes = useStyles();
-  const { dispatch } = useContext(StoreContext);
-
+  const { state, dispatch } = useContext(StoreContext);
+  const handleOnChangeName = changeHandlerFactory('name');
+  const handleOnChangeTown = changeHandlerFactory('town');
+  const handleOnChangeAddress = changeHandlerFactory('address');
   const handleOnChangeEmail = changeHandlerFactory('email');
-  const handleOnChangePassword = changeHandlerFactory('password');
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
       runValidations().then((formData) => {
-        dispatch(login(formData));
-        // history.push('/');
+        productService.checkoutOrder(state.cart, formData).then(() => {
+          history.push('/');
+          console.log(state, formData)
+        })
       });
     },
-    [ dispatch, runValidations]
+    [history, dispatch, runValidations]
   );
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Влез
+          Данни за поръчка
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <InputField
+                label={'Име'}
+                name={'name'}
+                changeHandler={handleOnChangeName}
+                runControlValidation={runControlValidation}
+                formState={formState}
+              />
+            </Grid>
             <Grid item xs={12}>
               <InputField
                 label={'Email адрес'}
@@ -92,32 +97,27 @@ const Login = ({
             </Grid>
             <Grid item xs={12}>
               <InputField
-                label={'Парола'}
-                name={'password'}
-                changeHandler={handleOnChangePassword}
+                label={'Град'}
+                name={'town'}
+                changeHandler={handleOnChangeTown}
                 runControlValidation={runControlValidation}
                 formState={formState}
-                type={'password'}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputField
+                label={'Адрес'}
+                name={'address'}
+                changeHandler={handleOnChangeAddress}
+                runControlValidation={runControlValidation}
+                formState={formState}
               />
             </Grid>
           </Grid>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Запомни"
+          <SubmitButton
+            disabled={formIsInvalid()}
+            title={'Поръчай'}
           />
-          <SubmitButton disabled={formIsInvalid()} title={'Влез'} />
-          <Grid container>
-            <Grid item xs>
-              <Link to="/login" variant="body2">
-                Забравена парола?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link to="/register" variant="body2" className={classes.link}>
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
     </Container>
@@ -125,19 +125,23 @@ const Login = ({
 };
 
 const schema = yup.object().shape({
-  email: yup.string().required('Email is required'),
-  password: yup
+  name: yup.string().required('Name is required'),
+  email: yup
     .string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 symbols'),
+    .email('Must be valid email')
+    .required('Email is required'),
+  town: yup.string().required('Town is required'),
+  address: yup.string().required('Address is required'),
 });
 
 const initialState = {
+  name: '',
   email: '',
-  password: '',
+  town: '',
+  address: '',
 };
 
-Login.propTypes = {
+Checkout.propTypes = {
   changeHandlerFactory: PropTypes.func,
   formState: PropTypes.object,
   runValidations: PropTypes.func,
@@ -146,4 +150,4 @@ Login.propTypes = {
   history: PropTypes.object,
 };
 
-export default withForm(Login, initialState, schema);
+export default withForm(Checkout, initialState, schema);

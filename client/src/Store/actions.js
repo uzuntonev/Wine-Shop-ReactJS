@@ -38,6 +38,10 @@ export const ActionTypes = {
   resetCart: Symbol('[PRODUCTS] Reset cart'),
   resetCartSuccess: Symbol('[PRODUCTS] Reset cart Success'),
   resetCartFailure: Symbol('[PRODUCTS] Reset cart Failure'),
+
+  deleteProduct: Symbol('[PRODUCTS] Delete Product'),
+  deleteProductSuccess: Symbol('[PRODUCTS] Delete Product Success'),
+  deleteProductFailure: Symbol('[PRODUCTS] Delete Product Failure'),
 };
 
 export const login = (user) => ({ type: ActionTypes.Login, payload: { user } });
@@ -79,3 +83,7 @@ export const removeItemFromCartFailure = (error) => ({ type: ActionTypes.removeI
 export const resetCart = () => ({ type: ActionTypes.resetCart, payload: undefined });
 export const resetCartSuccess = () => ({ type: ActionTypes.resetCartSuccess, payload: undefined});
 export const resetCartFailure = (error) => ({ type: ActionTypes.resetCartFailure, payload: { error }});
+
+export const deleteProduct = (id) => ({ type: ActionTypes.deleteProduct, payload: { id } });
+export const deleteProductSuccess = () => ({ type: ActionTypes.deleteProductSuccess, payload: undefined});
+export const deleteProductFailure = (error) => ({ type: ActionTypes.deleteProductFailure, payload: { error }});

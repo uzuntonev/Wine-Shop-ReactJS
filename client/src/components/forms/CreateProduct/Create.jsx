@@ -77,6 +77,7 @@ const schema = yup.object().shape({
   price: yup.string().required('Price is required'),
   size: yup.string().required('Size is required'),
   description: yup.string().required('Description is required'),
+  quantity: yup.string().required('Quantity is required'),
 });
 
 const initialState = {
@@ -87,6 +88,7 @@ const initialState = {
   size: '',
   price: '',
   description: '',
+  quantity: ''
 };
 
 Create.propTypes = {

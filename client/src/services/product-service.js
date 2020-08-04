@@ -30,6 +30,24 @@ const productService = {
       })
       .catch(console.error);
   },
+  updateProduct: function (payload) {
+    return axios
+    .put(`${baseUrl}/${payload._id}`, payload, {
+      withCredentials: true,
+    });
+  },
+  deleteProduct: function(id) {
+    return axios
+      .delete(`${baseUrl}/${id}`,{
+        withCredentials: true,
+    })
+  },
+  checkoutOrder: function(cart, client) {
+    return axios
+      .post(`${baseUrl}/checkout`, { cart, client },{
+        withCredentials: true,
+    })
+  }
 };
 
 export default productService;

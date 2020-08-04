@@ -17,7 +17,7 @@ import withForm from '../../../hocs/withForm';
 import SubmitButton from '../../SubmitButton/SubmitButton';
 import IconButton from '../../IconButton/IconButton';
 import LayoutFieldsProduct from '../LayoutFieldsProduct';
-
+import productService from '../../../services/product-service'
 const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -55,8 +55,12 @@ const EditDialog = (props) => {
         };
 
         console.log(product);
-        history.push('/my-products');
-        handleClose()
+        productService
+          .updateProduct(product)
+          .then(() => {
+            handleClose();
+          })
+          .catch((error) => {console.log(error)});
       });
     },
     [history, dispatch, runValidations, image]

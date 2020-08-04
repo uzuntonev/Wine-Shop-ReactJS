@@ -25,7 +25,7 @@ const IconButton = ({ handler, icon, attr, children }) => {
     camera: <PhotoCamera />,
     close: <Close />
   };
-  const handleIcon = useMemo(() => mapIcon[icon], [icon]);
+  const handleIcon = useMemo(() => mapIcon[icon], [icon, mapIcon]);
   return (
     <IconButtonMaterial {...attr} onClick={handler}>
       {handleIcon}

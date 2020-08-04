@@ -21,6 +21,7 @@ const LayoutProduct = ({
   const handleOnChangeSize = changeHandlerFactory('size');
   const handleOnChangePrice = changeHandlerFactory('price');
   const handleOnChangeDescription = changeHandlerFactory('description');
+  const handleOnChangeQuantity = changeHandlerFactory('quantity');
 
   const beginUpload = (tag) => {
     const uploadOptions = {
@@ -93,6 +94,15 @@ const LayoutProduct = ({
           label={'Цена'}
           name={'price'}
           changeHandler={handleOnChangePrice}
+          runControlValidation={runControlValidation}
+          formState={formState}
+        />
+      </Grid>
+      <Grid item xs={5}>
+        <InputField
+          label={'Количество'}
+          name={'quantity'}
+          changeHandler={handleOnChangeQuantity}
           runControlValidation={runControlValidation}
           formState={formState}
         />

@@ -10,8 +10,8 @@ const Basket = (props) => {
   const cart = JSON.parse(window.localStorage.getItem('cart'));
   const basket = (cart || []).reduce(
     (acc, curr) => {
-      const count = acc.count + curr.quantity;
-      const price = acc.price + curr.price * curr.quantity;
+      const count = acc.count + curr.productQuantityCart;
+      const price = acc.price + curr.price * curr.productQuantityCart;
       return { count, price };
     },
     { count: 0, price: 0 }

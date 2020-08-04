@@ -52,7 +52,7 @@ const Quantity = ({ product }) => {
         className={classes.input}
         id={product._id}
         size="4"
-        value={product.quantity}
+        value={product.productQuantityCart}
         onChange={(e) => handleChange(e, product)}
       />
       <IconButton

@@ -8,12 +8,14 @@ import {
   TableHead,
   TableRow as TableRowMaterial,
   Paper,
+  Typography,
 } from '@material-ui/core';
 import { CloudinaryContext } from 'cloudinary-react';
 import { StoreContext } from '../../store/store';
 import { resetCartSuccess } from '../../store/actions';
 import TableRow from './TableRow';
 import SubmitButton from '../SubmitButton/SubmitButton';
+import { useHistory } from 'react-router-dom';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -36,22 +38,29 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     width: '80vw',
   },
+  total: {
+    fontSize: 24,
+    float: 'right',
+    fontWeight: 'bold',
+  },
 }));
 
 const Cart = () => {
   const classes = useStyles();
   const { state, dispatch } = useContext(StoreContext);
-
+  const history = useHistory();
+  const cart = JSON.parse(window.localStorage.getItem('cart'));
+  const totalPrice = (cart || []).reduce((acc, curr) => {
+    acc += curr.price * curr.productQuantityCart;
+    return acc;
+  }, 0);
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(resetCartSuccess());
-      console.log(state.cart);
+      history.push('/checkout');
     },
-    [dispatch, state.cart]
+    [history]
   );
-
-  const cart = JSON.parse(window.localStorage.getItem('cart'));
   const renderProducts = (cart || []).map((product) => {
     return <TableRow key={product._id} product={product} />;
   });
@@ -80,6 +89,9 @@ const Cart = () => {
               )}
             </TableBody>
           </Table>
+          <Typography component="div" className={classes.total}>
+            Общо {totalPrice.toFixed(2)}лв
+          </Typography>
           <SubmitButton
             disabled={!renderProducts.length}
             title={'Приключи поръчката'}

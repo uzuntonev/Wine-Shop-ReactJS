@@ -23,7 +23,7 @@ const UnauthorizeActions = ({ product }) => {
     (product) => {
       dispatch(addToCart(product));
     },
-    [dispatch, product]
+    [dispatch]
   );
 
   return (

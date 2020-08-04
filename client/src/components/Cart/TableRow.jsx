@@ -71,7 +71,7 @@ const TableRow = ({ product }) => {
         <Quantity product={product} />
       </StyledTableCell>
       <StyledTableCell align="right">
-        {(product.quantity * product.price).toFixed(2)}лв
+        {(product.productQuantityCart * product.price).toFixed(2)}лв
       </StyledTableCell>
     </StyledTableRow>
   );
