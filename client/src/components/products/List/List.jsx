@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => {
     root: {
       padding: 20,
       alignSelf: 'center',
+      paddingLeft: 150,
       marginBottom: theme.spacing(12),
     },
     item: {
