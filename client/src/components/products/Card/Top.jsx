@@ -30,9 +30,7 @@ const Top = ({ product }) => {
     <Card className={classes.imageCard}>
       <NavLink to={`details/${product._id}`}>
         <CardActionArea
-          className={classes.imageActionArea}
-          onClick={() => console.log('go to details')}
-        >
+          className={classes.imageActionArea}>
           <Image
             className={classes.media}
             publicId={product.imageUrl}

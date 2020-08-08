@@ -5,7 +5,7 @@ import { Typography, Container, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { StoreContext } from '../../../store/store';
 import { createProduct } from '../../../store/actions';
-import SubmitButton from '../../SubmitButton/SubmitButton';
+import SubmitButton from '../../buttons/SubmitButton/SubmitButton';
 import LayoutFieldsProduct from '../LayoutFieldsProduct';
 import withForm from '../../../hocs/withForm';
 

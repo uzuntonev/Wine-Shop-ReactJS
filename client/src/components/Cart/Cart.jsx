@@ -1,4 +1,6 @@
 import React, { useContext, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+import { CloudinaryContext } from 'cloudinary-react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
   Table,
@@ -10,12 +12,9 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
-import { CloudinaryContext } from 'cloudinary-react';
 import { StoreContext } from '../../store/store';
-import { resetCartSuccess } from '../../store/actions';
 import TableRow from './TableRow';
-import SubmitButton from '../SubmitButton/SubmitButton';
-import { useHistory } from 'react-router-dom';
+import SubmitButton from '../buttons/SubmitButton/SubmitButton';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {

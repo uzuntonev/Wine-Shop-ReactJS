@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-const SubmitButton = ({ title, disabled }) => {
+const SubmitButton = ({ title, disabled, onClick }) => {
   const classes = useStyles();
   return (
     <Button
@@ -18,6 +18,7 @@ const SubmitButton = ({ title, disabled }) => {
       color="primary"
       className={classes.submit}
       disabled={disabled}
+      onClick={onClick}
     >
       {title}
     </Button>

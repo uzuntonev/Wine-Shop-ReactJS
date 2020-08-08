@@ -8,7 +8,8 @@ const Details = React.lazy(() => import('../components/products/Details/Details'
 const List = React.lazy(() => import('../components/products/List/List'));
 const Cart = React.lazy(() => import('../components/Cart/Cart'));
 const Create = React.lazy(() => import('../components/forms/CreateProduct/Create'));
-const Checkout = React.lazy(() => import('../components/forms/Checkout/Checkout'))
+const Checkout = React.lazy(() => import('../components/forms/Checkout/Checkout'));
+const ThankYou = React.lazy(() => import('../components/ThankYou/ThankYou'));
 const NotFound = React.lazy(() => import('../components/NotFound/NotFound'));
 const AppRouter = () => {
   const { state: { isAuth } } = useContext(StoreContext);
@@ -30,6 +31,7 @@ const AppRouter = () => {
       <Route path="/shop" component={List} />
       <Route path="/details/:id" component={Details} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/thankyou" component={ThankYou} />
       <Route path="*" component={NotFound} />
     </Switch>
   );

@@ -14,8 +14,8 @@ import {
 
 import { StoreContext } from '../../../store/store';
 import withForm from '../../../hocs/withForm';
-import SubmitButton from '../../SubmitButton/SubmitButton';
-import IconButton from '../../IconButton/IconButton';
+import SubmitButton from '../../buttons/SubmitButton/SubmitButton';
+import IconButton from '../../buttons/IconButton/IconButton';
 import LayoutFieldsProduct from '../LayoutFieldsProduct';
 import productService from '../../../services/product-service'
 const useStyles = makeStyles((theme) => ({

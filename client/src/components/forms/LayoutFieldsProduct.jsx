@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core/';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { openUploadWidget } from '../../services/cloudinary-service';
-import IconButton from '../IconButton/IconButton';
+import IconButton from '../buttons/IconButton/IconButton';
 import InputField from './InputField';
 import TextareaField from './TextareaField';
 

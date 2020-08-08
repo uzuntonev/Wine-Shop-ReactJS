@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Badge from '@material-ui/core/Badge';
 import { StoreContext } from '../../store/store';
-import IconButton from '../IconButton/IconButton';
+import IconButton from '../buttons/IconButton/IconButton';
 import NavLink from '../NavLink/NavLink';
 
 const Basket = (props) => {

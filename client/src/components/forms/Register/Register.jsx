@@ -15,7 +15,7 @@ import withForm from '../../../hocs/withForm';
 import { StoreContext } from '../../../store/store';
 import { register } from '../../../store/actions';
 import InputField from '../InputField';
-import SubmitButton from '../../SubmitButton/SubmitButton';
+import SubmitButton from '../../buttons/SubmitButton/SubmitButton';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

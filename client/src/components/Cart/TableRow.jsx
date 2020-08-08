@@ -4,7 +4,7 @@ import { Image, Transformation } from 'cloudinary-react';
 import { TableCell, TableRow as TableRowMaterial, Typography} from '@material-ui/core';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Quantity from './Quantity';
-import IconButton from '../IconButton/IconButton';
+import IconButton from '../buttons/IconButton/IconButton';
 import { StoreContext } from '../../store/store';
 import { removeItemFromCartSuccess } from '../../store/actions'
 

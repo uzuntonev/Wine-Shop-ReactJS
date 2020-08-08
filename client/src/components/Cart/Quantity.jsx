@@ -1,9 +1,16 @@
-import React, { Fragment, useContext, useCallback } from 'react';
+import React, {
+  Fragment,
+  useContext,
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { StoreContext } from '../../store/store';
 import { updateQuantitySuccess } from '../../store/actions';
-import IconButton from '../IconButton/IconButton';
+import IconButton from '../buttons/IconButton/IconButton';
 const useStyles = makeStyles((theme) => ({
   input: {
     background: 'transparent',
@@ -11,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 20,
   },
 }));
-const Quantity = ({ product }) => {
+const Quantity = ({ product, count, setCount }) => {
   const classes = useStyles();
   const { dispatch } = useContext(StoreContext);
 
@@ -24,20 +31,30 @@ const Quantity = ({ product }) => {
   const changeQuantity = (e, action, product) => {
     const element = document.getElementById(product._id);
     const mapAction = {
-      increase: () =>
-        dispatch(
-          updateQuantitySuccess({
-            product,
-            value: +element.value + 1,
-          })
-        ),
-      decrease: () =>
-        dispatch(
-          updateQuantitySuccess({
-            product,
-            value: +element.value - 1 <= 0 ? 0 : +element.value - 1,
-          })
-        ),
+      increase: () => {
+        if (!!count) {
+          setCount(+element.value + 1);
+        } else {
+          dispatch(
+            updateQuantitySuccess({
+              product,
+              value: +element.value + 1,
+            })
+          );
+        }
+      },
+      decrease: () => {
+        if (!!count) {
+          setCount(+element.value - 1 <= 0 ? 0 : +element.value - 1);
+        } else {
+          dispatch(
+            updateQuantitySuccess({
+              product,
+              value: +element.value - 1 <= 0 ? 0 : +element.value - 1,
+            })
+          );
+        }
+      },
     };
     mapAction[action]();
   };
@@ -52,7 +69,7 @@ const Quantity = ({ product }) => {
         className={classes.input}
         id={product._id}
         size="4"
-        value={product.productQuantityCart}
+        value={!!count ? count : product.productQuantityCart}
         onChange={(e) => handleChange(e, product)}
       />
       <IconButton

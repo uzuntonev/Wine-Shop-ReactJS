@@ -19,9 +19,9 @@ export const ActionTypes = {
   getProductsSuccess: Symbol('[PRODUCTS] Get All Products Success'),
   getProductsFailure: Symbol('[PRODUCTS] Get All Products Failure'),
 
-  getUserProducts: Symbol('[PRODUCTS] Get All Products'),
-  getUserProductsSuccess: Symbol('[PRODUCTS] Get All Products Success'),
-  getUserProductsFailure: Symbol('[PRODUCTS] Get All Products Failure'),
+  getUserProducts: Symbol('[PRODUCTS] Get User Products'),
+  getUserProductsSuccess: Symbol('[PRODUCTS] Get User Products Success'),
+  getUserProductsFailure: Symbol('[PRODUCTS] Get User Products Failure'),
 
   addToCart: Symbol('[PRODUCTS] Add to card'),
   addToCartSuccess: Symbol('[PRODUCTS] Add to card Success'),

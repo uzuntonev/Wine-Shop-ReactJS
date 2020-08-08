@@ -9,13 +9,12 @@ import {
   Typography,
   Container,
 } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import withForm from '../../../hocs/withForm';
 import { StoreContext } from '../../../store/store';
-import { register } from '../../../store/actions';
+import { resetCartSuccess } from '../../../store/actions';
 import InputField from '../InputField';
-import SubmitButton from '../../SubmitButton/SubmitButton';
+import SubmitButton from '../../buttons/SubmitButton/SubmitButton';
 import productService from '../../../services/product-service';
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +59,8 @@ const Checkout = ({
       e.preventDefault();
       runValidations().then((formData) => {
         productService.checkoutOrder(state.cart, formData).then(() => {
-          history.push('/');
+          dispatch(resetCartSuccess())
+          history.push('/thankyou');
           console.log(state, formData)
         })
       });

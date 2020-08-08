@@ -9,7 +9,7 @@ import Navbar from '../components/common/Navbar/Navbar';
 import Footer from '../components/common/Footer/Footer';
 import AppRouter from './AppRouter';
 import Toast from '../components/common/Toast/Toast';
-import Loader from '../components/Loader/Loader';
+import Loader from '../components/common/Loader/Loader';
 
 const theme = createMuiTheme({
   palette: {

@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import { CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import NavLink from '../../NavLink/NavLink';
-import IconButton from '../../IconButton/IconButton';
+import IconButton from '../../buttons/IconButton/IconButton';
 import { addToCart } from '../../../store/actions';
 import { StoreContext } from '../../../store/store';
 
