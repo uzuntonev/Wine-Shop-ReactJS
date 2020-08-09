@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CloudinaryContext } from 'cloudinary-react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -12,7 +12,6 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
-import { StoreContext } from '../../store/store';
 import TableRow from './TableRow';
 import SubmitButton from '../buttons/SubmitButton/SubmitButton';
 
@@ -46,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = () => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(StoreContext);
   const history = useHistory();
   const cart = JSON.parse(window.localStorage.getItem('cart'));
   const totalPrice = (cart || []).reduce((acc, curr) => {

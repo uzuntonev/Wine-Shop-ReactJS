@@ -1,11 +1,4 @@
-import React, {
-  Fragment,
-  useContext,
-  useCallback,
-  useState,
-  useRef,
-  useEffect,
-} from 'react';
+import React, { Fragment, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { StoreContext } from '../../store/store';

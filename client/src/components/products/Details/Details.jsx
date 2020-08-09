@@ -1,13 +1,15 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Image, CloudinaryContext } from 'cloudinary-react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Container } from '@material-ui/core/';
+import { addToCart } from '../../../store/actions';
 import productService from '../../../services/product-service';
 import Quantity from '../../Cart/Quantity';
 import SubmitButton from '../../buttons/SubmitButton/SubmitButton';
 import TableDetails from './TableDetails';
 import Loader from '../../common/Loader/Loader';
+import { StoreContext } from '../../../store/store';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -22,8 +24,7 @@ const useStyles = makeStyles((theme) => {
     container: {
       padding: '50px',
       paddingBottom: '400px',
-      paddingTop: '200px',
-      paddingLeft: '200px'
+      paddingTop: '100px',
     },
     price: {
       fontSize: '45px',
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => {
 
 const Details = () => {
   const classes = useStyles();
+  const { state, dispatch } = useContext(StoreContext);
   const params = useParams();
   const [product, setProduct] = useState();
   const [count, setCount] = useState(1);
@@ -45,13 +47,16 @@ const Details = () => {
   useEffect(() => {
     const { id: productId } = params;
     productService.getProductById(productId).then(({ data }) => {
-      setProduct({ ...data[0], productQuantityCart: 1 });
+      setProduct(data[0]);
     });
-  }, []);
+  }, [params]);
 
-  const handleSubmit = () => {
-    console.log(count, product);
-  };
+  const addToCartHandler = useCallback(
+    (product, count) => {
+        dispatch(addToCart(product, count));
+    },
+    [dispatch]
+  );
 
   if (!product) {
     return <Loader />;
@@ -59,7 +64,7 @@ const Details = () => {
 
   return (
     <CloudinaryContext cloudName="dfyamkucg">
-      <Grid container justify="center" alignItems="center">
+      <Grid container justify="center" >
         <Grid item xs={5}>
           <Image
             publicId={product.imageUrl}
@@ -78,7 +83,7 @@ const Details = () => {
             <p className={classes.price}>{product.price}лв.</p>
             <Quantity product={product} count={count} setCount={setCount} />
             <div className={classes.btnSubmit}>
-              <SubmitButton title={'Купи'} onClick={handleSubmit} />
+              <SubmitButton title={'Купи'} onClick={() => addToCartHandler(product, count)} />
             </div>
             <TableDetails product={product}/>
           </Container>

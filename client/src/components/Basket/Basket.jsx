@@ -1,12 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Badge from '@material-ui/core/Badge';
-import { StoreContext } from '../../store/store';
 import IconButton from '../buttons/IconButton/IconButton';
 import NavLink from '../NavLink/NavLink';
 
 const Basket = (props) => {
-  const { state } = useContext(StoreContext);
-
   const cart = JSON.parse(window.localStorage.getItem('cart'));
   const basket = (cart || []).reduce(
     (acc, curr) => {

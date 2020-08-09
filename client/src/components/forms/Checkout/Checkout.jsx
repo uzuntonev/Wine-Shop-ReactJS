@@ -1,10 +1,8 @@
 import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import {
   CssBaseline,
-  Avatar,
   Grid,
   Typography,
   Container,
@@ -61,11 +59,10 @@ const Checkout = ({
         productService.checkoutOrder(state.cart, formData).then(() => {
           dispatch(resetCartSuccess())
           history.push('/thankyou');
-          console.log(state, formData)
         })
       });
     },
-    [history, dispatch, runValidations]
+    [history, dispatch, runValidations, state.cart]
   );
 
   return (

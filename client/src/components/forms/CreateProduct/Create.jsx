@@ -37,10 +37,10 @@ const Create = (props) => {
     (e) => {
       e.preventDefault();
       runValidations().then((formData) => {
+        if (!image) { return; }
         const product = {
           ...formData,
           imageUrl: image,
-          creatorId: window.localStorage.getItem('user').id,
         };
 
         dispatch(createProduct(product));

@@ -35,7 +35,7 @@ const AuthorizeActions = ({ product }) => {
   const handleDelete = useCallback(() => {
     dispatch(deleteProduct(product._id));
     history.push(`/my-products`);
-  }, [dispatch, product._id]);
+  }, [dispatch, product._id, history]);
   return (
     <Fragment>
       <CardActions className={classes.actionButtons}>

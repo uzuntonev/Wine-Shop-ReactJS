@@ -1,5 +1,4 @@
-import React, { useContext, useState, useCallback, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,8 +10,6 @@ import {
   DialogTitle,
   Typography,
 } from '@material-ui/core/';
-
-import { StoreContext } from '../../../store/store';
 import withForm from '../../../hocs/withForm';
 import SubmitButton from '../../buttons/SubmitButton/SubmitButton';
 import IconButton from '../../buttons/IconButton/IconButton';
@@ -38,12 +35,10 @@ const EditDialog = (props) => {
     product,
   } = props;
   const [image, setImage] = useState();
-  const history = useHistory();
-  const { dispatch } = useContext(StoreContext);
 
   useEffect(() => {
     Object.assign(formState.form, { ...formState.form, ...product });
-  }, []);
+  }, [product]);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -54,7 +49,6 @@ const EditDialog = (props) => {
           imageUrl: image,
         };
 
-        console.log(product);
         productService
           .updateProduct(product)
           .then(() => {
@@ -63,7 +57,7 @@ const EditDialog = (props) => {
           .catch((error) => {console.log(error)});
       });
     },
-    [history, dispatch, runValidations, image]
+    [runValidations, image, handleClose]
   );
 
   return (

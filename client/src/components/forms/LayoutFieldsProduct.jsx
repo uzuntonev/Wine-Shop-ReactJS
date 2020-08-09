@@ -120,8 +120,6 @@ const LayoutProduct = ({
             icon="camera"
           />
         </label>
-      </Grid>
-      <Grid container justify="center" alignItems="center" item xs={5}>
         {image ? <CheckCircleIcon htmlColor={'green'} /> : null}
       </Grid>
       <Grid item xs={12}>

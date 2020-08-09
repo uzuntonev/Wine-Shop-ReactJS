@@ -14,7 +14,7 @@ const NotFound = React.lazy(() => import('../components/NotFound/NotFound'));
 const AppRouter = () => {
   const { state: { isAuth } } = useContext(StoreContext);
   const ProtectRoute = ({ path, component}) => {
-    return isAuth ? <Route path={path} component={component} /> : <Redirect to={'login'} />
+    return isAuth ? <Route path={path} component={component} /> : <Redirect to={'/login'} />
   }
   const InnerProtectRoute = ({ path, component}) => {
     return isAuth ? <Redirect to={'/'}/> : <Route path={path} component={component} /> 
@@ -25,13 +25,13 @@ const AppRouter = () => {
       <InnerProtectRoute path="/login" component={Login} />
       <InnerProtectRoute path="/register" component={Register} />
       <InnerProtectRoute path="/cart" component={Cart} />
+      <InnerProtectRoute path="/shop" component={List} />
+      <InnerProtectRoute path="/checkout" component={Checkout} />
+      <InnerProtectRoute path="/thankyou" component={ThankYou} />
       <ProtectRoute path={"/add-product"} component={Create} />
       <ProtectRoute path={"/my-products"} exact component={List} />
       <ProtectRoute path="/my-products/:id" component={List}/>
-      <Route path="/shop" component={List} />
       <Route path="/details/:id" component={Details} />
-      <Route path="/checkout" component={Checkout} />
-      <Route path="/thankyou" component={ThankYou} />
       <Route path="*" component={NotFound} />
     </Switch>
   );
