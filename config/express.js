@@ -7,11 +7,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
     credentials: true,
   })
 );
-app.use(express.static(path.resolve( 'client/public')));
+
 app.use(cookieParser(secret));
 app.use(express.json());
 
@@ -20,11 +19,12 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Server error!');
 });
 
+const root = require('path').resolve( '/client/build');
+app.use(express.static(root));
 app.get('*', (req, res) => {
-  res.sendFile(
-    path.join(path.resolve( 'client/public'), 'index.html')
-  );
+  res.sendFile('index.html', { root });
 });
+
 require('./routes')(app);
 
 app.listen(port, () => {
