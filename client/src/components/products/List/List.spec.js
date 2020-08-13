@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 test('Component "List" is mount', () => {
   const useContextSpy = jest
     .spyOn(React, 'useContext')
-    .mockReturnValueOnce({ state: { products: [] } });
+    .mockReturnValueOnce({ state: { products: [{},{}], isAuth: false } });
   const theme = createMuiTheme({
     palette: {
       primary: {
