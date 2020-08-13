@@ -1,0 +1,2 @@
+(this["webpackJsonpwine-shop"]=this["webpackJsonpwine-shop"]||[]).push([[10],{410:function(n,e,t){"use strict";t.r(e);var s=t(0),o=t.n(s);e.default=function(){return o.a.createElement("h1",null,"Not Found 404")}}}]);
+//# sourceMappingURL=10.fea55e5c.chunk.js.map

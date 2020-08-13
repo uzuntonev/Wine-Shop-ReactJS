@@ -1,0 +1,1 @@
+{"version":3,"sources":["components/ThankYou/ThankYou.jsx"],"names":["TankYou"],"mappings":"+GAAA,2BAQeA,UANC,WACZ,OACI","file":"static/js/11.51ec98cb.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nconst TankYou = () => {\r\n    return (\r\n        <h1>Thank you !</h1>\r\n    )\r\n}\r\n\r\nexport default TankYou;"],"sourceRoot":""}
