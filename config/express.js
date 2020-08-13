@@ -19,7 +19,7 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Server error!');
 });
 
-const root = require('path').resolve( '/client/build');
+const root = require('path').resolve( '/client/public');
 app.use(express.static(root));
 app.get('*', (req, res) => {
   res.sendFile('index.html', { root });
