@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component "SubmitButton" is mount 1`] = `
+<button
+  className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-submit-1 MuiButton-containedPrimary MuiButton-fullWidth"
+  disabled={false}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onDragLeave={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  onMouseDown={[Function]}
+  onMouseLeave={[Function]}
+  onMouseUp={[Function]}
+  onTouchEnd={[Function]}
+  onTouchMove={[Function]}
+  onTouchStart={[Function]}
+  tabIndex={0}
+  type="submit"
+>
+  <span
+    className="MuiButton-label"
+  >
+    Send
+  </span>
+</button>
+`;
