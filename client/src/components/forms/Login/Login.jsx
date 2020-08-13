@@ -1,4 +1,5 @@
 import React, { useContext, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
@@ -50,11 +51,10 @@ const Login = ({
   runValidations,
   runControlValidation,
   formIsInvalid,
-  history,
 }) => {
   const classes = useStyles();
   const { dispatch } = useContext(StoreContext);
-
+  const history = useHistory();
   const handleOnChangeEmail = changeHandlerFactory('email');
   const handleOnChangePassword = changeHandlerFactory('password');
 
@@ -63,7 +63,7 @@ const Login = ({
       e.preventDefault();
       runValidations().then((formData) => {
         dispatch(login(formData));
-        // history.push('/');
+        history.push('/');
       });
     },
     [ dispatch, runValidations]

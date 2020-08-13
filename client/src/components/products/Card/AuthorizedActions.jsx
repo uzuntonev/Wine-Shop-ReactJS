@@ -23,7 +23,7 @@ const AuthorizeActions = ({ product }) => {
   const history = useHistory();
 
   const handleClickOpen = useCallback(() => {
-    history.push(`${history.location.pathname}/${product._id}`);
+    history.push(`${history.location.pathname}/edit/${product._id}`);
     setOpen(true);
   }, [history, product._id]);
 

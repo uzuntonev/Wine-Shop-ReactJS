@@ -1,4 +1,5 @@
 import React, { useContext, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import {
@@ -43,9 +44,9 @@ const Checkout = ({
   runValidations,
   runControlValidation,
   formIsInvalid,
-  history,
 }) => {
   const classes = useStyles();
+  const history = useHistory();
   const { state, dispatch } = useContext(StoreContext);
   const handleOnChangeName = changeHandlerFactory('name');
   const handleOnChangeTown = changeHandlerFactory('town');

@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
@@ -27,9 +28,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const AuthorizedNav = ({ history }) => {
+const AuthorizedNav = (props) => {
   const classes = useStyles();
   const { dispatch } = useContext(StoreContext);
+  const history = useHistory();
 
   const handlerLogout = () => {
     dispatch(logout());

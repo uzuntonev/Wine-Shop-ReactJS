@@ -1,4 +1,5 @@
 import React, { useContext, useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import { Typography, Container, CssBaseline } from '@material-ui/core';
@@ -28,8 +29,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Create = (props) => {
-  const { runValidations, formIsInvalid, history } = props;
+  const { runValidations, formIsInvalid } = props;
   const classes = useStyles();
+  const history = useHistory();
   const [image, setImage] = useState();
   const { dispatch } = useContext(StoreContext);
 

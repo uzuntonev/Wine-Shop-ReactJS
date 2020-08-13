@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '../Card/Card';
 import { Grid } from '@material-ui/core';
 import productService from '../../../services/product-service';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, useLocation } from 'react-router-dom';
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -23,33 +23,18 @@ const useStyles = makeStyles((theme) => {
 const List = () => {
   const classes = useStyles();
   const match = useRouteMatch();
+  const location = useLocation();
   const { state, dispatch } = useContext(StoreContext);
-  const [products, setProducts] = useState([]);
-
 
   useEffect(() => {
     if (state.isAuth) {
-      // dispatch(getUserProducts());
-      productService
-        .getUserProducts()
-        .then(({ data: products }) => {
-          // dispatch(getUserProductsSuccess(products));
-          setProducts(products);
-        })
-        // .catch(getProductsFailure);
+      dispatch(getUserProducts());
     } else {
-      // dispatch(getProducts());
-      productService
-        .getAllProducts()
-        .then(({ data: products }) => {
-          // dispatch(getProductsSuccess(products));
-          setProducts(products);
-        })
-        // .catch(getUserProductsFailure);
+      dispatch(getProducts());
     }
-  }, [match.url]);
+  }, [location.pathname, state.products.length]);
 
-  const renderProducts = (products.length ? products : state.products).map(
+  const renderProducts = state.products.map(
     (product) => {
       return (
         <Grid className={classes.item} item xs={3} key={product._id}>
