@@ -5,6 +5,10 @@ const cors = require('cors');
 const { secret, port } = require('./config');
 const app = express();
 
+const root = require('path').join(__dirname,'..', '/client/build');
+
+app.use(express.static(root));
+
 app.use(
   cors({
     credentials: true,
@@ -20,6 +24,7 @@ app.use(function (err, req, res, next) {
 });
 
 require('./routes')(app);
+
 
 app.listen(port, () => {
   console.log(`Server: Listening on port ${port}`);
