@@ -324,7 +324,6 @@ const ContextStore = (props) => {
   );
 
   return (
-    // <StoreContext.Provider value={[state, dispatch]}>
     <StoreContext.Provider value={store}>
       {props.children}
     </StoreContext.Provider>

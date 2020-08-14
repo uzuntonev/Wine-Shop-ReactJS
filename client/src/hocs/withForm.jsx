@@ -15,11 +15,11 @@ const withForm = (Cmp, initialState, schema) => {
           id = null;
         }
         const newValue = e.target.value;
-        // id = setTimeout(() => {
+        id = setTimeout(() => {
         setState(({ form }) => {
           return { form: { ...form, [name]: newValue } };
         });
-        // }, 300);
+        }, 300);
       };
     };
 
@@ -51,8 +51,7 @@ const withForm = (Cmp, initialState, schema) => {
             setState({ ...state, errors: { [controlName]: undefined } })
           )
           .catch((err) => {
-            // const inputError = err.inner.find((e) => e.path === inputName);
-            // if (inputError)
+
             setState({
               ...state,
               errors: { [controlName]: err.errors },
