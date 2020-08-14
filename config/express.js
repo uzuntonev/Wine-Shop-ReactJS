@@ -19,6 +19,12 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Server error!');
 });
 
+const root = require('path').join(__dirname, '/client/build');
+app.use(express.static(root));
+app.get('*', (req, res) => {
+  res.sendFile('index.html', { root });
+});
+
 require('./routes')(app);
 
 app.listen(port, () => {
