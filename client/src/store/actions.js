@@ -85,5 +85,5 @@ export const resetCartSuccess = () => ({ type: ActionTypes.resetCartSuccess, pay
 export const resetCartFailure = (error) => ({ type: ActionTypes.resetCartFailure, payload: { error }});
 
 export const deleteProduct = (id) => ({ type: ActionTypes.deleteProduct, payload: { id } });
-export const deleteProductSuccess = () => ({ type: ActionTypes.deleteProductSuccess, payload: undefined});
+export const deleteProductSuccess = (productId) => ({ type: ActionTypes.deleteProductSuccess, payload: { productId }});
 export const deleteProductFailure = (error) => ({ type: ActionTypes.deleteProductFailure, payload: { error }});

@@ -220,8 +220,9 @@ const actionMap = {
     error: null,
     toast: { status: '', message: '' },
   }),
-  [ActionTypes.deleteProductSuccess]: (state) => ({
+  [ActionTypes.deleteProductSuccess]: (state, {  productId }) => ({
     ...state,
+    products: state.products.filter(p => p._id !== productId),
     error: null,
     toast: { status: 'success', message: 'Successfully deleted product' },
   }),
@@ -294,7 +295,7 @@ const asyncActionMap = {
 
   [ActionTypes.deleteProduct]:({ id }) => {
     return productService.deleteProduct(id).then(() => {
-     return deleteProductSuccess()
+     return deleteProductSuccess(id)
     }).catch((error) => deleteProductFailure(error))
   }
 };

@@ -32,7 +32,7 @@ const List = () => {
     } else {
       dispatch(getProducts());
     }
-  }, [location.pathname, state.products.length]);
+  }, [location.pathname, state.products]);
 
   const renderProducts = state.products.map(
     (product) => {
