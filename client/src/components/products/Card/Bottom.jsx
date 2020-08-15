@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => {
       border: `solid 1px ${theme.palette.primary.text}`,
       borderRadius: '20px',
     },
+    title: {
+      fontStyle: 'italic',
+      textAlign: 'center'
+    }
   };
 });
 const Bottom = ({ product }) => {
@@ -26,6 +30,7 @@ const Bottom = ({ product }) => {
   return (
     <Card className={classes.cardInfo}>
       <CardContent>
+        <h3 className={classes.title}>{product.name}</h3>
         <div className={classes.row}>
           <h3>Реколта</h3>
           <span>{product.year}</span>

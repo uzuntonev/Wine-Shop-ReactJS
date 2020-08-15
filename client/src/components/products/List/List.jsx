@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => {
     root: {
       padding: 20,
       alignSelf: 'center',
-      paddingLeft: 150,
+      paddingLeft: 300,
       marginBottom: theme.spacing(12),
     },
     item: {
@@ -32,7 +32,7 @@ const List = () => {
     } else {
       dispatch(getProducts());
     }
-  }, [location.pathname, state.products]);
+  }, [location.pathname]);
 
   const renderProducts = state.products.map(
     (product) => {

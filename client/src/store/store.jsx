@@ -50,6 +50,7 @@ const actionMap = {
     ...state,
     user,
     isAuth: true,
+    products: [],
     toast: { status: 'success', message: 'You are log successfully' },
   }),
   [ActionTypes.LoginFailure]: (state, { error }) => ({
@@ -66,6 +67,7 @@ const actionMap = {
     ...state,
     user,
     isAuth: true,
+    products: [],
     toast: {
       status: 'success',
       message: 'You are register and login successfully',
@@ -80,6 +82,7 @@ const actionMap = {
     ...state,
     user: null,
     isAuth: false,
+    products: [],
     toast: { status: 'success', message: 'You are logout successfully' },
   }),
 
