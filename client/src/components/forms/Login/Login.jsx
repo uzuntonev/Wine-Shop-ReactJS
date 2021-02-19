@@ -66,7 +66,7 @@ const Login = ({
         history.push('/');
       });
     },
-    [ dispatch, runValidations]
+    [dispatch, runValidations]
   );
 
   return (
@@ -125,7 +125,7 @@ const Login = ({
 };
 
 const schema = yup.object().shape({
-  email: yup.string().required('Email is required'),
+  email: yup.string().required('Email is required.'),
   password: yup
     .string()
     .required('Password is required')
